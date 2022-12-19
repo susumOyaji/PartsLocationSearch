@@ -27,9 +27,18 @@
     </div><!-- /emscripten bits -->
     <fieldset>
       <legend>Search Results</legend>
-      <input type="text" name="text" value="品目コード" size="20">
-      <input type="text" name="text" value="コンテナコード" size="20">
-      <input type="text" name="text" value="棚コード" size="20">
+      
+      <label for="message">Message</label>
+      <input placeholder="Enter some Number" id="input_code" name="name_message">
+      <p id="result">Results</p>
+  
+
+      <input type="number" id="parts" name="text"  size="20">
+      <input type="number" id="contaner" name="text" value="コンテナコード" size="20">
+      <input type="number" id="rack" name="text" value="棚コード" size="20">
+      <div>Input: <span id="output"></span></div>
+      <div>Change: <span id="output2"></span></div>
+
     </fieldset>
     <fieldset> 
       <legend>Options</legend>
