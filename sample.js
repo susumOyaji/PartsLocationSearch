@@ -125,12 +125,12 @@ function _sort(asc){
 
 
       log("5...Create a table...");
-      db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER, name TEXT, price INTEGER)");
+      db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER, name TEXT, price INTEGER, gram INTEGER)");
 
-      const stmt = db.prepare("insert into fruits values(?, ?, ?)");
-      stmt.bind([1, 'apple', 150]).stepReset();
-      stmt.bind([2, 'orange', 200]).stepReset();
-      stmt.bind([3, 'kiwi', 350]).stepReset();
+      const stmt = db.prepare("insert into fruits values(?, ?, ?, ?)");
+      stmt.bind([1, 'apple', 150, 100]).stepReset();
+      stmt.bind([2, 'orange', 200, 150]).stepReset();
+      stmt.bind([3, 'kiwi', 350, 200]).stepReset();
       /*
       stmt.bind([4, 'cherry', 400]).stepReset();
       stmt.bind([5, 'banana', 320]).stepReset();
@@ -209,20 +209,131 @@ function _sort(asc){
       const code = document.querySelector('#input_code');
       const result = document.querySelector('#result');
       code.addEventListener('input', function () {
-        result.textContent = this.value;
+        //result.textContent = this.value;
         const resultRows=[];
         try{
           db.exec({
              sql: "SELECT * FROM fruits where id="+this.value ,//昇順でソートしてみます。
              rowMode: "object",
              resultRows,
-           });
-           log("...sort to ID=1 Result rows:",JSON.stringify(resultRows,undefined,2));
+            });
+           log("...sort to ID=1 Result rows:",JSON.stringify(resultRows[0].name,undefined,2));
+            const parts = document.querySelector( "#partsresult" );
+     
+            const contaner = document.querySelector( "#contanerresult" );
+          
+            const rack = document.querySelector( "#rackresult" );
+          
+           for( var i=0; i<resultRows.length; i++) {
+            result.textContent = result.textContent + resultRows[i].name;
+            parts.textContent= parts.textContent + resultRows[i].name ;
+            contaner.textContent= contaner.textContent + resultRows[i].price ;
+            rack.textContent= rack.textContent + resultRows[i].gram ;
+          }
         }catch(e){
           error(e.message);
         }
         
       });
+
+
+
+
+
+
+
+
+
+
+      const rack = document.querySelector('#rack');
+      rack.addEventListener('input', function () {
+        const resultRows=[];
+        try{
+          db.exec({
+             sql: "SELECT * FROM fruits where gram="+this.value ,//昇順でソートしてみます。
+             rowMode: "object",
+             resultRows,
+            });
+            //log("...sort to ID=1 Result rows:",JSON.stringify(resultRows[0].name,undefined,2));
+            //const parts = document.querySelector( "#partsresult" );
+            const contaner = document.querySelector( "#contanerresult" );
+            const rack = document.querySelector( "#rackresult" );
+           
+            for( var i=0; i<resultRows.length; i++) {
+            contaner.textContent= contaner.textContent + resultRows[i].name ;
+           }
+        }catch(e){
+          error(e.message);
+        }
+        contaner.value="";
+      });
+
+
+      const contaner = document.querySelector('#contaner');
+      //result = document.querySelector('#result');
+      contaner.addEventListener('input', function () {
+        //result.textContent = this.value;
+        const resultRows=[];
+        try{
+          db.exec({
+             sql: "SELECT * FROM fruits where price="+this.value ,//昇順でソートしてみます。
+             rowMode: "object",
+             resultRows,
+            });
+           log("...sort to ID=1 Result rows:",JSON.stringify(resultRows[0].name,undefined,2));
+           
+           result.textContent = resultRows[0].name;
+
+           const parts = document.querySelector( "#partsresult" );
+           parts.textContent= resultRows[0].name ;
+
+           //const contaner = document.querySelector( "#contanerresult" );
+           //contaner.textContent= resultRows[0].price ;
+
+           const rack = document.querySelector( "#rackresult" );
+           rack.textContent= resultRows[0].gram ;
+        }catch(e){
+          error(e.message);
+        }
+        
+      });
+
+
+      const parts = document.querySelector('#parts');
+      //result = document.querySelector('#result');
+      parts.addEventListener('input', function () {
+        //result.textContent = this.value;
+        const resultRows=[];
+        try{
+          db.exec({
+             sql: "SELECT * FROM fruits where id="+this.value ,//昇順でソートしてみます。
+             rowMode: "object",
+             resultRows,
+            });
+           log("...sort to ID=1 Result rows:",JSON.stringify(resultRows[0].name,undefined,2));
+           result.textContent = resultRows[0].name;
+
+           //const parts = document.querySelector( "#partsresult" );
+           //parts.textContent= resultRows[0].name ;
+
+           const contaner = document.querySelector( "#contanerresult" );
+           contaner.textContent= resultRows[0].price ;
+
+           const rack = document.querySelector( "#rackresult" );
+           rack.textContent= resultRows[0].gram ;
+        }catch(e){
+          error(e.message);
+        }
+        
+      });
+
+
+
+
+
+
+
+
 
 
   
@@ -249,11 +360,14 @@ function _sort(asc){
           });
           */
           
-          db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER, name TEXT, price INTEGER)");
-          const stmt = db.prepare("insert into fruits values(?, ?, ?)");
-          stmt.bind([1, 'apple', 150]).stepReset();
-          stmt.bind([2, 'orange', 200]).stepReset();
-          stmt.bind([3, 'kiwi', 350]).stepReset();
+          db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER, name TEXT, price INTEGER, gram INTEGER)");
+          const stmt = db.prepare("insert into fruits values(?, ?, ?, ?)");
+          stmt.bind([1, 'apple', 150, 100]).stepReset();
+          stmt.bind([2, 'orange', 200, 150]).stepReset();
+          stmt.bind([3, 'kiwi', 350, 200]).stepReset();
+          stmt.bind([4, 'lemon', 150, 100]).stepReset();
+          stmt.bind([5, 'ichigo', 200, 150]).stepReset();
+          stmt.bind([6, 'suika', 350, 200]).stepReset();
           stmt.finalize();
           
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-us">
+<html lang="ja">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -30,14 +30,24 @@
       
       <label for="message">Message</label>
       <input placeholder="Enter some Number" id="input_code" name="name_message">
-      <p id="result">Results</p>
+      <label id="result">Results </label><p></p>
   
+      
+      <input placeholder="Enter some PartsNumber" type="number" id="parts"   size="20">
+      <p id="partsresult">PartsResults= </p>
 
-      <input type="number" id="parts" name="text"  size="20">
-      <input type="number" id="contaner" name="text" value="コンテナコード" size="20">
-      <input type="number" id="rack" name="text" value="棚コード" size="20">
-      <div>Input: <span id="output"></span></div>
-      <div>Change: <span id="output2"></span></div>
+
+      <input placeholder="Enter some ContanerNumber" type="number" id="contaner" value="コンテナコード" size="20">
+      <p id="contanerresult">ContanerResults </p>
+
+      <input placeholder="Enter some RackNumber" type="number" id="rack"  value="棚コード" size="20">
+      <p id="rackresult">RackResults </p>
+
+    </fieldset>
+
+
+    <fieldset>
+      <legend>Search Results</legend>
 
     </fieldset>
     <fieldset> 
