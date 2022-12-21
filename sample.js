@@ -3,24 +3,9 @@ var winObj;
 var db;
 
 
-function _insert(_id,_name,_price) {
-  const resultRows = [];
-  //const stmt = db.prepare("insert into fruits values(?, ?, ?)");
-  //stmt.bind([_id, _name, _price]).stepReset();
-  db.exec({
-    sql: "insert into fruits(id,name,price) values ($a,$b,$c)",
-    // bind by parameter name...
-    bind: {$a: _id , $b: _name ,$c:_price}
-  });
+
   
-  db.exec({
-    sql: "SELECT * FROM fruits",//実行するSQL
-    rowMode: "object",//コールバックの最初の引数のタイプを指定します,
-    //'array'(デフォルト), 'object', 'stmt'現在のStmtをコールバックに渡します
-    resultRows,//returnValue:
-  });
-  return resultRows;
-}
+ 
 
 
 function _delete(id) {
@@ -57,6 +42,24 @@ function _sort(asc){
   return resultRows;
 }
 
+function _insert(_rack,_contaner,_parts) {
+  const resultRows = [];
+  //const stmt = db.prepare("insert into fruits values(?, ?, ?)");
+  //stmt.bind([_id, _name, _price]).stepReset();
+  db.exec({
+    sql: "insert into fruits(rack,contaner,parts) values ($a,$b,$c)",
+    // bind by parameter name...
+    bind: {$a: _rack , $b: _contaner ,$c: _parts}
+  });
+
+  db.exec({
+    sql: "SELECT * FROM fruits",//実行するSQL
+    rowMode: "object",//コールバックの最初の引数のタイプを指定します,
+    //'array'(デフォルト), 'object', 'stmt'現在のStmtをコールバックに渡します
+    resultRows,//returnValue:
+  });
+  return resultRows;
+}
 
 //main()
 (function () {
@@ -246,26 +249,43 @@ function _sort(asc){
 
 
       const rack = document.querySelector('#rack');
+      const next = document.getElementById("contaner");
+      const rackresult= document.querySelector( "#rackresult" )
+      const contanerresult = document.querySelector( "#contanerresult" );
+      //const focus = () => document.getElementById('contaner').focus()
       rack.addEventListener('input', function () {
         const resultRows=[];
-        try{
-          db.exec({
-             sql: "SELECT * FROM fruits where gram="+this.value ,//昇順でソートしてみます。
-             rowMode: "object",
-             resultRows,
-            });
-            //log("...sort to ID=1 Result rows:",JSON.stringify(resultRows[0].name,undefined,2));
-            //const parts = document.querySelector( "#partsresult" );
-            const contaner = document.querySelector( "#contanerresult" );
-            const rack = document.querySelector( "#rackresult" );
-           
+        contanerresult.innerText="ContanerResults";
+        rackresult.innerText = "RackResults";
+        // focusがあたっている要素を取得
+        const elem = document.activeElement;
+        // 3文字入力したらフォーカスを外す
+        if(elem.value.length >= 1) {
+          try{
+            db.exec({
+                sql: "SELECT * FROM fruits where rack="+this.value ,//昇順でソートしてみます。
+                rowMode: "object",
+                resultRows,
+              });
+          }catch(e){
+            error(e.message);
+          }
+          if(resultRows.length==0){
+            rackresult.innerText = elem.value+" is Not registered";
+          }else{
             for( var i=0; i<resultRows.length; i++) {
-            contaner.textContent= contaner.textContent + resultRows[i].name ;
-           }
-        }catch(e){
-          error(e.message);
+              contanerresult.innerText= contanerresult.innerText + "... "+ resultRows[i].contaner ;
+            }
+            elem.blur();
+            next.innerText = `要素「${elem.id}」のフォーカスを外しました。`;
+            next.focus();
+
+
+          }
+
+         
         }
-        contaner.value="";
+        //contaner.value="";
       });
 
 
@@ -349,7 +369,7 @@ function _sort(asc){
         try{
           
           const saveSql = [];
-          /*
+          
           db.exec({
             sql: ["create table if not exists fruits('id');",
                 "insert into fruits(id) values(?),(?),(?)"],
@@ -358,22 +378,34 @@ function _sort(asc){
               (performance.now() / 2) >> 0],
           saveSql
           });
-          */
           
-          db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER, name TEXT, price INTEGER, gram INTEGER)");
-          const stmt = db.prepare("insert into fruits values(?, ?, ?, ?)");
-          stmt.bind([1, 'apple', 150, 100]).stepReset();
-          stmt.bind([2, 'orange', 200, 150]).stepReset();
-          stmt.bind([3, 'kiwi', 350, 200]).stepReset();
-          stmt.bind([4, 'lemon', 150, 100]).stepReset();
-          stmt.bind([5, 'ichigo', 200, 150]).stepReset();
-          stmt.bind([6, 'suika', 350, 200]).stepReset();
+          
+          //db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY AUTOINCREMENT , name TEXT, price INTEGER, gram INTEGER)");
+          db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY AUTOINCREMENT,rack,contaner,parts)");
+         
+         
+          const resultRows = [];
+          db.exec({
+            sql: "insert into fruits(rack,contaner,parts) values($a,$b,$c)",
+            // bind by parameter name...
+            bind: {$a:6, $b:10 ,$c:100},
+  
+          });
+          
+         
+          
+          const stmt = db.prepare("insert into fruits values(?, ?, ? )");
+          stmt.bind([1, 1, 100]).stepReset();
+          stmt.bind([1, 200, 150]).stepReset();
+          stmt.bind([3, 350, 200]).stepReset();
+          stmt.bind([4, 150, 100]).stepReset();
+          stmt.bind([5, 200, 150]).stepReset();
+          stmt.bind([6, 350, 200]).stepReset();
           stmt.finalize();
-          
 
-          //console.log("saveSql =",saveSql,theStore);
-          log("DB (re)initialized.");
-          log("DB が (再) 初期化されました。");
+        
+          log("DB Delete All. and Reconfiguration");
+        
         }catch(e){
           error(e.message);
         }
@@ -384,7 +416,7 @@ function _sort(asc){
         const resultRows=[];
         try{
           db.exec({
-            sql: "SELECT * FROM fruits order by id asc" ,//昇順でソートしてみます。
+            sql: "SELECT * FROM fruits order by rack asc" ,//昇順でソートしてみます。
             rowMode: "object",
             resultRows,
           });
