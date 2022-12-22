@@ -365,35 +365,73 @@ function _insert(_rack,_contaner,_parts) {
         log("kvvfs",db.filename+"Storage cleared:",sz,"entries.");
       });
       
-      document.querySelector('#btn-init-db').addEventListener('click',function(){
-        try{
-          
+      document.querySelector('#btn-init-db').addEventListener('click', function () {
+        try {
+ 
+          //db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY AUTOINCREMENT , name TEXT, price INTEGER, gram INTEGER)");
+          db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY ,rack,contaner,parts INTEGER DEFAULT 'NO VALUE')");
+         
+          /*
           const saveSql = [];
           
           db.exec({
-            sql: ["create table if not exists fruits('id');",
-                "insert into fruits(id) values(?),(?),(?)"],
-            bind: [performance.now() >> 0,
-              (performance.now() * 2) >> 0,
-              (performance.now() / 2) >> 0],
-          saveSql
+            sql: ["insert into fruits(rack) values(?),(?),(?)"],
+            bind: [10, 20, 30],
+            saveSql
           });
+          log("...sort to saveSql Result rows:", JSON.stringify(saveSql, undefined, 2));
+          */
+
           
           
-          //db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY AUTOINCREMENT , name TEXT, price INTEGER, gram INTEGER)");
-          db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY AUTOINCREMENT,rack,contaner,parts)");
-         
-         
+          log("Insert using a prepared statement...");
+          let i;
+          let q = db.prepare([
+            "insert into fruits(rack,contaner,parts) ",
+            "values(?,?,?)"
+          ]);
+          try {
+            //for( i = 100; i < 103; ++i ){
+            //  q.bind( [i, i*2, i*3] ).step();
+            //  q.reset();
+            //}
+            // Equivalent...
+            //for( i = 103; i <= 105; ++i ){
+            //  q.bind(1, i).bind(2, i*2).stepReset();
+            //}
+            //
+            for( i = 105; i <= 108; ++i ){
+              q.bind(1,i).bind(2,i*2).bind(3,i*3).stepReset();
+            }
+          }finally{
+            q.finalize();
+          }   
+          //log("...sort to qqqqq Result rows:",JSON.stringify(q,undefined,2));
+          
+
+          /*
           const resultRows = [];
+          db.exec({
+            sql: "insert into fruits(rack,contaner,parts) values(10, 20, 30)",
+
+            // bind by parameter name...
+            bind: {$a:6, $b:10 ,$c:100},
+           
+          });
           db.exec({
             sql: "insert into fruits(rack,contaner,parts) values($a,$b,$c)",
             // bind by parameter name...
-            bind: {$a:6, $b:10 ,$c:100},
-  
+            bind: {$a:7, $b:10 ,$c:100},
+          
           });
-          
+          db.exec({
+            sql: "insert into fruits(rack,contaner,parts) values($a,$b,$c)",
+            // bind by parameter name...
+            bind: {$a:8, $b:10 },
          
-          
+          });
+          */
+          /*
           const stmt = db.prepare("insert into fruits values(?, ?, ? )");
           stmt.bind([1, 1, 100]).stepReset();
           stmt.bind([1, 200, 150]).stepReset();
@@ -402,14 +440,17 @@ function _insert(_rack,_contaner,_parts) {
           stmt.bind([5, 200, 150]).stepReset();
           stmt.bind([6, 350, 200]).stepReset();
           stmt.finalize();
-
-        
+          */
+          log("...sort to Asc Result rows:",JSON.stringify(resultRows,undefined,2)); 
           log("DB Delete All. and Reconfiguration");
         
         }catch(e){
           error(e.message);
         }
       });
+
+
+
       const btnSelect = document.querySelector('#btn-sort-db-rows-order');
       btnSelect.addEventListener('click',function(){
         log("DB rows:Asc");
