@@ -400,7 +400,7 @@ function _insert(_rack,_contaner,_parts) {
             //  q.bind(1, i).bind(2, i*2).stepReset();
             //}
             //
-            for( i = 105; i <= 108; ++i ){
+            for( i = 105; i <= 107; ++i ){
               q.bind(1,i).bind(2,i*2).bind(3,i*3).stepReset();
             }
           }finally{
