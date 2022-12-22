@@ -1,5 +1,5 @@
 'use strict';
-var winObj;
+//var winObj;
 var db;
 
 
@@ -61,6 +61,9 @@ function _insert(_rack,_contaner,_parts) {
   return resultRows;
 }
 
+
+
+
 //main()
 (function () {
   const T = self.SqliteTestUtil;
@@ -87,86 +90,9 @@ function _insert(_rack,_contaner,_parts) {
   const error = function(...args){
     logHtml('error',...args);
   };
-  /*
-    let logHtml;
-    if(self.window === self ){
-        console.log("Running demo from main UI thread.");
-        logHtml = function(cssClass,...args){
-        const ln = document.createElement('div');
-        if(cssClass) ln.classList.add(cssClass);
-        ln.append(document.createTextNode(args.join(' ')));
-        document.body.append(ln);
-        };
-    }else{ 
-        console.log("Running demo from Worker thread.");
-        logHtml = function(cssClass,...args){
-        postMessage({
-            type:'log',
-            payload:{cssClass, args}
-        });
-        };
-    }
-    const log = (...args)=>logHtml('',...args);
-    const warn = (...args)=>logHtml('warning',...args);
-    const error = (...args)=>logHtml('error',...args);
-    */
+ 
 
-    const demo1 = function(sqlite3){
-      const capi = sqlite3.capi/*C-style API*/,
-          oo = sqlite3.oo1/*high-level OO API*/;
-      log("3...sqlite3 version",capi.sqlite3_libversion(), capi.sqlite3_sourceid());
-      db = new oo.DB("/mydb.sqlite3",'ct');
-      log("4...transient db =",db.filename);
-      /**
-       Never(!) rely on garbage collection to clean up DBs and
-      (especially) prepared statements. Always wrap their lifetimes
-      in a try/finally construct, as demonstrated below. By and
-      large, client code can entirely avoid lifetime-related
-      complications of prepared statement objects by using the
-      DB.exec() method for SQL execution.
-      */ 
-
-
-      log("5...Create a table...");
-      db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER, name TEXT, price INTEGER, gram INTEGER)");
-
-      const stmt = db.prepare("insert into fruits values(?, ?, ?, ?)");
-      stmt.bind([1, 'apple', 150, 100]).stepReset();
-      stmt.bind([2, 'orange', 200, 150]).stepReset();
-      stmt.bind([3, 'kiwi', 350, 200]).stepReset();
-      /*
-      stmt.bind([4, 'cherry', 400]).stepReset();
-      stmt.bind([5, 'banana', 320]).stepReset();
-      stmt.bind([6, 'grape', 550]).stepReset();
-      */
-      stmt.finalize();
-
-      const resultRows = [];
-      db.exec({
-        sql: "SELECT * FROM fruits",//実行するSQL
-        rowMode: "object",//コールバックの最初の引数のタイプを指定します,
-        //'array'(デフォルト), 'object', 'stmt'現在のStmtをコールバックに渡します
-        resultRows,//returnValue:
-      });
-      log("ref....._insert...Result rows:", JSON.stringify(resultRows, undefined, 2));
     
-      var e = _insert(4,'lemon',1000);
-      log("1...._insert...Result rows:", JSON.stringify(e, undefined, 2)); 
-
-
-      e = _delete(4);
-      log("2...._delete...Result rows:", JSON.stringify(e, undefined, 2));   
-
-      var asc =_sort("asc");
-      log("3..._sort to asc Result rows:",JSON.stringify(asc,undefined,2)); 
-
-      var desc = _sort("desc");
-      log("4..._sort to desc to Result rows:",JSON.stringify(desc,undefined,2));
-        
-
-
-
-    };
 
     
     
@@ -190,24 +116,8 @@ function _insert(_rack,_contaner,_parts) {
       const theStore = 's'===dbStorage[0] ? sessionStorage : localStorage;
       const db = new oo.JsStorageDb( dbStorage );
       // Or: oo.DB(dbStorage, 'c', 'kvvfs')
-      log("db.storageSize():",db.storageSize());
+      log("db.storageSize():",db.storageSize());    
 
-
-    
-
-      //db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER, name TEXT, price INTEGER)");
-      //const stmt = db.prepare("insert into fruits values(?, ?, ?)");
-      //stmt.bind([1, 'apple', 150]).stepReset();
-      //stmt.bind([2, 'orange', 200]).stepReset();
-      //stmt.bind([3, 'kiwi', 350]).stepReset();
-      /*
-      stmt.bind([4, 'cherry', 400]).stepReset();
-      stmt.bind([5, 'banana', 320]).stepReset();
-      stmt.bind([6, 'grape', 550]).stepReset();
-      */
-      //stmt.finalize();
-
-      
 
       const code = document.querySelector('#input_code');
       const result = document.querySelector('#result');
@@ -367,21 +277,7 @@ function _insert(_rack,_contaner,_parts) {
       
       document.querySelector('#btn-init-db').addEventListener('click', function () {
         try {
- 
-          //db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY AUTOINCREMENT , name TEXT, price INTEGER, gram INTEGER)");
           db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY ,rack,contaner,parts INTEGER DEFAULT 'NO VALUE')");
-         
-          /*
-          const saveSql = [];
-          
-          db.exec({
-            sql: ["insert into fruits(rack) values(?),(?),(?)"],
-            bind: [10, 20, 30],
-            saveSql
-          });
-          log("...sort to saveSql Result rows:", JSON.stringify(saveSql, undefined, 2));
-          */
-
           
           
           log("Insert using a prepared statement...");
@@ -406,8 +302,7 @@ function _insert(_rack,_contaner,_parts) {
           }finally{
             q.finalize();
           }   
-          //log("...sort to qqqqq Result rows:",JSON.stringify(q,undefined,2));
-          
+        
 
           /*
           const resultRows = [];
@@ -441,6 +336,7 @@ function _insert(_rack,_contaner,_parts) {
           stmt.bind([6, 350, 200]).stepReset();
           stmt.finalize();
           */
+          
           log("...sort to Asc Result rows:",JSON.stringify(resultRows,undefined,2)); 
           log("DB Delete All. and Reconfiguration");
         
@@ -466,6 +362,7 @@ function _insert(_rack,_contaner,_parts) {
         }
         log("...sort to Asc Result rows:",JSON.stringify(resultRows,undefined,2)); 
       });
+
 
       const btnSelectAsc = document.querySelector('#btn-sort-db-rows-asc');
       btnSelectAsc.addEventListener('click',function(){
@@ -493,19 +390,6 @@ function _insert(_rack,_contaner,_parts) {
       });
       
 
-
-
-
-
-
-
-
-
-
-
-
-      //db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER, name TEXT, price INTEGER)");
-
      
 
       const resultRows = [];
@@ -526,16 +410,15 @@ function _insert(_rack,_contaner,_parts) {
         log("DBには、前のセッションのデータが含まれています。[Clear storage]ボタンを使用して削除します.");
         //btnSelect.click();
       }
-
-      
+    
 
     };
  
 
-  sqlite3InitModule(self.sqlite3TestModule).then((sqlite3)=>{
-    runTests(sqlite3);
-    //demo1(sqlite3);//実行メソッド
-  });
+    sqlite3InitModule(self.sqlite3TestModule).then((sqlite3)=>{
+      runTests(sqlite3);
+      //demo1(sqlite3);//実行メソッド
+    });
 
 
 })();
