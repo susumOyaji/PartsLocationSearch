@@ -119,44 +119,7 @@ function _insert(_rack,_contaner,_parts) {
       log("db.storageSize():",db.storageSize());    
 
 
-      const code = document.querySelector('#input_code');
-      const result = document.querySelector('#result');
-      code.addEventListener('input', function () {
-        //result.textContent = this.value;
-        const resultRows=[];
-        try{
-          db.exec({
-             sql: "SELECT * FROM fruits where id="+this.value ,//昇順でソートしてみます。
-             rowMode: "object",
-             resultRows,
-            });
-           log("...sort to ID=1 Result rows:",JSON.stringify(resultRows[0].name,undefined,2));
-            const parts = document.querySelector( "#partsresult" );
      
-            const contaner = document.querySelector( "#contanerresult" );
-          
-            const rack = document.querySelector( "#rackresult" );
-          
-           for( var i=0; i<resultRows.length; i++) {
-            result.textContent = result.textContent + resultRows[i].name;
-            parts.textContent= parts.textContent + resultRows[i].name ;
-            contaner.textContent= contaner.textContent + resultRows[i].price ;
-            rack.textContent= rack.textContent + resultRows[i].gram ;
-          }
-        }catch(e){
-          error(e.message);
-        }
-        
-      });
-
-
-
-
-
-
-
-
-
 
       const rack = document.querySelector('#rack');
       const next = document.getElementById("contaner");
@@ -206,7 +169,7 @@ function _insert(_rack,_contaner,_parts) {
         const resultRows=[];
         try{
           db.exec({
-             sql: "SELECT * FROM fruits where price="+this.value ,//昇順でソートしてみます。
+             sql: "SELECT * FROM fruits where contaner="+this.value ,//昇順でソートしてみます。
              rowMode: "object",
              resultRows,
             });
@@ -229,30 +192,46 @@ function _insert(_rack,_contaner,_parts) {
       });
 
 
-      const parts = document.querySelector('#parts');
+
+
+
+      //const parts = document.getElementById("#parts");
+      const parts = document.querySelector("#parts");
+      //contanerresult= document.querySelector( "#contanerresult" )
+      //rackresult = document.querySelector('#rackresult');
       //result = document.querySelector('#result');
       parts.addEventListener('input', function () {
         //result.textContent = this.value;
         const resultRows=[];
-        try{
-          db.exec({
-             sql: "SELECT * FROM fruits where id="+this.value ,//昇順でソートしてみます。
-             rowMode: "object",
-             resultRows,
-            });
-           log("...sort to ID=1 Result rows:",JSON.stringify(resultRows[0].name,undefined,2));
-           result.textContent = resultRows[0].name;
+        contanerresult.innerText="ContanerResults";
+        rackresult.innerText = "RackResults";
+        // focusがあたっている要素を取得
+        const elem = document.activeElement;
+        // 3文字入力したらフォーカスを外す
+        if(elem.value.length >= 5) {
+          try{
+            db.exec({
+                sql: "SELECT * FROM fruits where parts="+this.value ,//昇順でソートしてみます。
+                rowMode: "object",
+                resultRows,
+              });
+          }catch(e){
+            error(e.message);
+          }
+          if(resultRows.length==0){
+            rackresult.innerText = elem.value+" is Not registered";
+          }else{
+            for( var i=0; i<resultRows.length; i++) {
+              contanerresult.innerText= resultRows[i].contaner ;
+              rackresult.innerText= resultRows[i].rack ;
+            }
+            elem.blur();
+            //next.innerText = `要素「${elem.id}」のフォーカスを外しました。`;
+            //next.focus();
 
-           //const parts = document.querySelector( "#partsresult" );
-           //parts.textContent= resultRows[0].name ;
 
-           const contaner = document.querySelector( "#contanerresult" );
-           contaner.textContent= resultRows[0].price ;
+          }
 
-           const rack = document.querySelector( "#rackresult" );
-           rack.textContent= resultRows[0].gram ;
-        }catch(e){
-          error(e.message);
         }
         
       });
@@ -274,7 +253,9 @@ function _insert(_rack,_contaner,_parts) {
         const sz = db.clearStorage();
         log("kvvfs",db.filename+"Storage cleared:",sz,"entries.");
       });
-      
+
+
+      //insert
       document.querySelector('#btn-init-db').addEventListener('click', function () {
         try {
           db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY ,rack,contaner,parts INTEGER DEFAULT 'NO VALUE')");
@@ -287,59 +268,26 @@ function _insert(_rack,_contaner,_parts) {
             "values(?,?,?)"
           ]);
           try {
-            //for( i = 100; i < 103; ++i ){
-            //  q.bind( [i, i*2, i*3] ).step();
-            //  q.reset();
-            //}
-            // Equivalent...
-            //for( i = 103; i <= 105; ++i ){
-            //  q.bind(1, i).bind(2, i*2).stepReset();
-            //}
-            //
-            for( i = 105; i <= 107; ++i ){
-              q.bind(1,i).bind(2,i*2).bind(3,i*3).stepReset();
+            q.bind(1,1).bind(2,1).bind(3,10500).stepReset();
+            q.bind(1,1).bind(2,2).bind(3,10600).stepReset();
+            q.bind(1,1).bind(2,3).bind(3,10700).stepReset();
+           for( i = 105; i <= 107; ++i ){
+              q.bind(1,i).bind(2,i*10).bind(3,i*100).stepReset();
             }
           }finally{
             q.finalize();
-          }   
-        
-
-          /*
+          } 
+          
           const resultRows = [];
           db.exec({
-            sql: "insert into fruits(rack,contaner,parts) values(10, 20, 30)",
-
-            // bind by parameter name...
-            bind: {$a:6, $b:10 ,$c:100},
-           
+            sql: "SELECT * FROM fruits",//実行するSQL
+            rowMode: "object",//コールバックの最初の引数のタイプを指定します,
+            //'array'(デフォルト), 'object', 'stmt'現在のStmtをコールバックに渡します
+            resultRows,//returnValue:
           });
-          db.exec({
-            sql: "insert into fruits(rack,contaner,parts) values($a,$b,$c)",
-            // bind by parameter name...
-            bind: {$a:7, $b:10 ,$c:100},
-          
-          });
-          db.exec({
-            sql: "insert into fruits(rack,contaner,parts) values($a,$b,$c)",
-            // bind by parameter name...
-            bind: {$a:8, $b:10 },
-         
-          });
-          */
-          /*
-          const stmt = db.prepare("insert into fruits values(?, ?, ? )");
-          stmt.bind([1, 1, 100]).stepReset();
-          stmt.bind([1, 200, 150]).stepReset();
-          stmt.bind([3, 350, 200]).stepReset();
-          stmt.bind([4, 150, 100]).stepReset();
-          stmt.bind([5, 200, 150]).stepReset();
-          stmt.bind([6, 350, 200]).stepReset();
-          stmt.finalize();
-          */
-          
-          log("...sort to Asc Result rows:",JSON.stringify(resultRows,undefined,2)); 
           log("DB Delete All. and Reconfiguration");
-        
+          log("..._insert...Result rows:", JSON.stringify(resultRows, undefined, 2));
+         
         }catch(e){
           error(e.message);
         }
@@ -350,6 +298,7 @@ function _insert(_rack,_contaner,_parts) {
       const btnSelect = document.querySelector('#btn-sort-db-rows-order');
       btnSelect.addEventListener('click',function(){
         log("DB rows:Asc");
+        document.getElementById("btn-clear-log").click();
         const resultRows=[];
         try{
           db.exec({
@@ -367,6 +316,7 @@ function _insert(_rack,_contaner,_parts) {
       const btnSelectAsc = document.querySelector('#btn-sort-db-rows-asc');
       btnSelectAsc.addEventListener('click',function(){
         log("DB rows:Desc");
+        document.getElementById("btn-clear-log").click();
         const resultRows=[];
         try{
           

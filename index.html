@@ -6,6 +6,7 @@
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <link rel="stylesheet" href="sqlite-wasm-3400000/common/emscripten.css"/>
     <link rel="stylesheet" href="sqlite-wasm-3400000/common/testing.css"/>
+    <link rel="stylesheet" href="PartsLocationSerarch.css"/>
     <title>Hello, sqlite3</title>
   </head>
   <body>
@@ -25,47 +26,37 @@
     <div class="emscripten">
       <progress value="0" max="100" id="module-progress" hidden="1"></progress>  
     </div><!-- /emscripten bits -->
-    <fieldset>
-      <legend>Search Results</legend>
-      
-      <label for="message">Message</label>
-      <input placeholder="Enter some Number" id="input_code" name="name_message">
-      <label id="result">Results </label><p></p>
-  
-      
-      <input placeholder="Enter some PartsNumber" type="number" id="parts"   size="20">
-      <p id="partsresult">PartsResults= </p>
-
-
-      <input placeholder="Enter some ContanerNumber" type="number" id="contaner" value="コンテナコード" size="20">
-      <p id="contanerresult">ContanerResults </p>
-
-      <input placeholder="Enter some RackNumber" type="number" id="rack"  value="棚コード" size="20">
-      <p id="rackresult">RackResults </p>
-
-    </fieldset>
-
-
-    <fieldset>
-      <legend>Search Results</legend>
-
-    </fieldset>
-    <fieldset> 
-      <legend>Options</legend>
-     
-      <div class="toolbarFirst">
-        <button id="btn-clear-log">Clear Display</button>
-        <button id="btn-clear-storage">Clear storage</button>
-        <button id="btn-storage-size">Approx. storage size</button>
+    <div class="windows">
+      <div class="option_win">
+        <fieldset> 
+          <legend>Options</legend>
+            <button id="btn-clear-log">Clear Display</button><p></p>
+            <button id="btn-clear-storage">Clear storage</button><p></p>
+            <button id="btn-storage-size">Approx. storage size</button><p></p>    
+            <button id="btn-init-db">(Re)init db(Add to Data</button><p></p>
+            <button id="btn-sort-db-rows-order">Sort db rows Asc</button><p></p>
+            <button id="btn-sort-db-rows-asc">Sort db rows Desc</button><p></p>
+        </fieldset>
       </div>
-      <div class="toolbarSecond">
-        
-        <button id="btn-init-db">(Re)init db(Add to Data</button>
-        <button id="btn-sort-db-rows-order">Sort db rows Asc</button>
-        <button id="btn-sort-db-rows-asc">Sort db rows Desc</button>
-        
+      <div class="results_win">
+        <fieldset>
+          <legend>Search Results</legend>
+          <input placeholder="Enter some PartsNumber" type="number" id="parts"   size="20">
+          <label id="partsresult">PartsResults= </label><p></p>
+
+
+          <input placeholder="Enter some ContanerNumber" type="number" id="contaner" value="コンテナコード" size="20">
+          <label id="contanerresult">ContanerResults </label><p></p>
+
+          <input placeholder="Enter some RackNumber" type="number" id="rack"  value="棚コード" size="20">
+          <label id="rackresult">RackResults </label>
+
+        </fieldset>
       </div>
-    </fieldset>
+    
+      
+  </div>
+
     <div id="test-output"></div>
     <style>
       .toolbar {
@@ -76,7 +67,7 @@
     </style>
     <script src="sqlite-wasm-3400000/jswasm/sqlite3.js"></script>
     <script src="sqlite-wasm-3400000/common/SqliteTestUtil.js"></script>
-   
-    <script src="sample.js"></script>
+ 
+    <script src="main.js"></script>
   </body>
 </html>

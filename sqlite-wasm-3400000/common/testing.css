@@ -1,21 +1,15 @@
 body {
-  
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  
-}
+ }
 textarea {
     font-family: monospace;
 }
 header {
     font-size: 130%;
     font-weight: bold;
-    background-color:bisque;
-}
-area {
-  float: left;
-  padding: 10px;
+    background-color: red;
 }
 .hidden, .initially-hidden {
     position: absolute !important;
