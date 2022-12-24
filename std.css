@@ -1,0 +1,36 @@
+#test {
+color: red;
+position: fixed;
+top: 0;
+width: 100%;
+height: 30px;
+font-size: 150%;
+background-color: darkgrey;
+}
+.box1{
+background:red;
+}
+.box2{
+background:blue;
+}
+.box3{
+background:green;
+}
+
+.box{
+display:flex;
+justify-content:center;
+align-items:center;
+width:350px;
+height:100px;
+}
+
+
+.wrap{
+display:flex;
+justify-content:space-between;
+}
+
+.option{
+display:flex;
+}

@@ -92,11 +92,9 @@ function _insert(_rack,_contaner,_parts) {
   };
  
 
-    
 
-    
-    
-    
+
+
     //////////////////////////////////
     //////////////////////////////
     const runTests = function(sqlite3){
@@ -116,9 +114,35 @@ function _insert(_rack,_contaner,_parts) {
       const theStore = 's'===dbStorage[0] ? sessionStorage : localStorage;
       const db = new oo.JsStorageDb( dbStorage );
       // Or: oo.DB(dbStorage, 'c', 'kvvfs')
-      log("db.storageSize():",db.storageSize());    
+      log("db.storageSize():", db.storageSize());  
+      
 
 
+
+      function insert(_rack,_contaner,_parts) {
+        const resultRows = [];
+        
+        db.exec({
+          sql: "insert into fruits(rack,contaner,parts) values ($a,$b,$c)",
+          // bind by parameter name...
+          bind: {$a: _rack , $b: _contaner ,$c: _parts}
+        });
+      
+        db.exec({
+          sql: "SELECT * FROM fruits",//実行するSQL
+          rowMode: "object",//コールバックの最初の引数のタイプを指定します,
+          //'array'(デフォルト), 'object', 'stmt'現在のStmtをコールバックに渡します
+          resultRows,//returnValue:
+        });
+        return resultRows;
+      }
+    
+
+
+
+
+
+      
      
 
       const rack = document.querySelector('#rack');
@@ -271,9 +295,10 @@ function _insert(_rack,_contaner,_parts) {
             q.bind(1,1).bind(2,1).bind(3,10500).stepReset();
             q.bind(1,1).bind(2,2).bind(3,10600).stepReset();
             q.bind(1,1).bind(2,3).bind(3,10700).stepReset();
-           for( i = 105; i <= 107; ++i ){
-              q.bind(1,i).bind(2,i*10).bind(3,i*100).stepReset();
+            for( i = 105; i <= 107; ++i ){
+                q.bind(1,i).bind(2,i*10).bind(3,i*100).stepReset();
             }
+            var ret = insert(99, 99, 99); 
           }finally{
             q.finalize();
           } 
@@ -292,6 +317,9 @@ function _insert(_rack,_contaner,_parts) {
           error(e.message);
         }
       });
+
+
+
 
 
 

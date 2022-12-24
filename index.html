@@ -2,6 +2,7 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <link rel="stylesheet" href="sqlite-wasm-3400000/common/emscripten.css"/>
@@ -41,16 +42,12 @@
       <div class="results_win">
         <fieldset>
           <legend>Search Results</legend>
-          <input placeholder="Enter some PartsNumber" type="number" id="parts"   size="20">
-          <label id="partsresult">PartsResults= </label><p></p>
-
-
-          <input placeholder="Enter some ContanerNumber" type="number" id="contaner" value="コンテナコード" size="20">
-          <label id="contanerresult">ContanerResults </label><p></p>
-
-          <input placeholder="Enter some RackNumber" type="number" id="rack"  value="棚コード" size="20">
+            <input type="search" id="parts"  placeholder="品目コード" size="30">
+            <label id="partsresult">PartsResults= </label><p></p>
+            <input  type="search" id="contaner" placeholder="コンテナコード" size="30">
+            <label id="contanerresult">ContanerResults </label><p></p>
+            <input  type="search" id="rack"  placeholder="棚コード" size="30">
           <label id="rackresult">RackResults </label>
-
         </fieldset>
       </div>
     

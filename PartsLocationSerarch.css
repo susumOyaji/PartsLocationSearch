@@ -5,20 +5,23 @@ header {
 
 .windows{
 display:flex;
-width: 650px;
-height:auto;
-padding:0px;
+/*justfy-content:center;/*だと子要素は左右中央よせになるよ*/
 
-
+/*justfy-content:flex-start;/*だと子要素は左よせになるよ*/
+/*justfy-content:flex-end;/*だと子要素は右よせになるよ*/
+/*justify-content:space-around;/*は、子要素全ての左右余白を均等にして配置します。*/
+/*justify-content:space-between;/*は、子要素全ての端から始まって端で終わるように、左右余白も均等にして配置します。*/
+justify-content:space-between;
 }
 .option_win {
-    width: 250px;
+    /*width: 250px;
     height: auto;
-    
+    */
 }
 .results_win{
     display:flex;
     flex-direction: column;
-    width: 750px;
-    height: auto;
+    width: 1000px;
+    /*height: auto;*/
+    
 }
