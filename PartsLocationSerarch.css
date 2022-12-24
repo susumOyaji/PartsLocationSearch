@@ -1,19 +1,81 @@
 
+textarea {
+    font-family: monospace;
+}
 header {
+    font-size: 130%;
+    font-weight: bold;
+    background-color: rgb(255, 170, 0);
+}
+.hidden, .initially-hidden {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    display: none !important;
+}
+fieldset > legend {
+    padding: 0 0.5em;
+}
+span.labeled-input {
+    padding: 0.25em;
+    margin: 0.25em 0.5em;
+    border-radius: 0.25em;
+    white-space: nowrap;
+    background: #0002;
+}
+.center { text-align: center; }
+.error {
+    color: red;
+    background-color: yellow;
+}
+.strong { font-weight: 700 }
+.warning { color: firebrick; }
+.green { color: darkgreen; }
+.tests-pass { background-color: green; color: white }
+.tests-fail { background-color: red; color: yellow }
+.faded { opacity: 0.5; }
+.group-start { color: blue; }
+.group-end { color: blue; }
+.input-wrapper {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+#test-output {
+  border: 1px inset;
+  border-radius: 0.25em;
+  padding: 0.25em;
+  /*max-height: 30em;*/
+  overflow: auto;
+  white-space: break-spaces;
+  display: flex; flex-direction: column;
+  font-family: monospace;
+}
+#test-output.reverse {
+  flex-direction: column-reverse;
+}
+label[for] { cursor: pointer }
+
+
+
+
+.header {
     background-color: rgb(255, 208, 0);
 }
 
 .windows{
 display:flex;
-/*justfy-content:center;/*だと子要素は左右中央よせになるよ*/
+padding: 0;
+justify-content:center;/*だと子要素は左右中央よせになるよ*/
 
-/*justfy-content:flex-start;/*だと子要素は左よせになるよ*/
-/*justfy-content:flex-end;/*だと子要素は右よせになるよ*/
+/*justify-content:flex-start;/*だと子要素は左よせになるよ*/
+/*justify-content:flex-end;/*だと子要素は右よせになるよ*/
 /*justify-content:space-around;/*は、子要素全ての左右余白を均等にして配置します。*/
 /*justify-content:space-between;/*は、子要素全ての端から始まって端で終わるように、左右余白も均等にして配置します。*/
-justify-content:space-between;
+/*justify-content:space-between;*/
 }
 .option_win {
+    /*background-color: rgb(202, 255, 127);*/
     /*width: 250px;
     height: auto;
     */
@@ -21,7 +83,10 @@ justify-content:space-between;
 .results_win{
     display:flex;
     flex-direction: column;
-    width: 1000px;
+    width: 800px;
     /*height: auto;*/
     
+}
+body{
+    /*background-color: rgb(202, 255, 127);*/ 
 }
