@@ -50,6 +50,7 @@ span.labeled-input {
   white-space: break-spaces;
   display: flex; flex-direction: column;
   font-family: monospace;
+  background-color:darkgrey;
 }
 #test-output.reverse {
   flex-direction: column-reverse;
