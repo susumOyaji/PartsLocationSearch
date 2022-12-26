@@ -27,32 +27,40 @@
     <div class="emscripten">
       <progress value="0" max="100" id="module-progress" hidden="1"></progress>  
     </div><!-- /emscripten bits -->
+
     <div class="windows">
-      <div class="option_win">
-        <fieldset> 
-          <legend>Options</legend>
-            <button id="btn-clear-log">Clear Display</button><p></p>
-            <button id="btn-clear-storage">Clear storage</button><p></p>
-            <button id="btn-storage-size">Approx. storage size</button><p></p>    
-            <button id="btn-init-db">(Re)init db(Add to Data</button><p></p>
-            <button id="btn-sort-db-rows-order">Sort db rows Asc</button><p></p>
-            <button id="btn-sort-db-rows-asc">Sort db rows Desc</button><p></p>
+      
+      <div class="serch_win">
+        <fieldset>
+          <legend>Search</legend>
+          <button id="btn-search">Search</button>
+          <button id="btn-inout">In/Out</button>
+         
+            <input type="search" id="parts"  placeholder="品目コード" size="30"><p></p>
+            <input  type="search" id="contaner" placeholder="コンテナコード" size="30"><p></p>
+            <input  type="search" id="rack"  placeholder="棚コード" size="30"><p></p>
         </fieldset>
       </div>
       <div class="results_win">
         <fieldset>
-          <legend>Search Results</legend>
-            <input type="search" id="parts"  placeholder="品目コード" size="30">
-            <label id="partsresult">PartsResults= </label><p></p>
-            <input  type="search" id="contaner" placeholder="コンテナコード" size="30">
-            <label id="contanerresult">ContanerResults </label><p></p>
-            <input  type="search" id="rack"  placeholder="棚コード" size="30">
-          <label id="rackresult">RackResults </label>
-        </fieldset>
+          <legend>Results / Comment</legend>
+            <label id="result"></label><p></p>
+           
+          </fieldset>
       </div>
-    
-      
-  </div>
+    </div>
+
+    <div class="option_win">
+      <fieldset> 
+        <legend>Options</legend>
+          <button id="btn-clear-log">Clear Display</button>
+          <button id="btn-clear-storage">Clear storage</button>
+          <button id="btn-storage-size">Approx. storage size</button>   
+          <button id="btn-init-db">(Re)init db(Add to Data</button>
+          <button id="btn-sort-db-rows-order">Sort db rows Asc</button>
+          <button id="btn-sort-db-rows-asc">Sort db rows Desc</button>
+      </fieldset>
+    </div>
 
     <div id="test-output"></div>
     <style>

@@ -1,4 +1,9 @@
-
+body{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    /*background-color: rgb(202, 255, 127);*/ 
+}
 textarea {
     font-family: monospace;
 }
@@ -50,7 +55,7 @@ span.labeled-input {
   white-space: break-spaces;
   display: flex; flex-direction: column;
   font-family: monospace;
-  background-color:darkgrey;
+  background-color:rgb(252, 251, 251);
 }
 #test-output.reverse {
   flex-direction: column-reverse;
@@ -76,6 +81,8 @@ justify-content:center;/*だと子要素は左右中央よせになるよ*/
 /*justify-content:space-between;*/
 }
 .option_win {
+    display:flex;
+    flex-direction: row;
     /*background-color: rgb(202, 255, 127);*/
     /*width: 250px;
     height: auto;
@@ -87,7 +94,4 @@ justify-content:center;/*だと子要素は左右中央よせになるよ*/
     width: 800px;
     /*height: auto;*/
     
-}
-body{
-    /*background-color: rgb(202, 255, 127);*/ 
 }

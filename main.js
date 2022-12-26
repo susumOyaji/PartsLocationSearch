@@ -119,6 +119,12 @@ function _insert(_rack,_contaner,_parts) {
 
 
 
+
+
+
+
+
+
       function insert(_rack,_contaner,_parts) {
         const resultRows = [];
         
@@ -142,93 +148,13 @@ function _insert(_rack,_contaner,_parts) {
 
 
 
-      
-     
-
-      const rack = document.querySelector('#rack');
-      const next = document.getElementById("contaner");
-      const rackresult= document.querySelector( "#rackresult" )
-      const contanerresult = document.querySelector( "#contanerresult" );
-      //const focus = () => document.getElementById('contaner').focus()
-      rack.addEventListener('input', function () {
-        const resultRows=[];
-        contanerresult.innerText="ContanerResults";
-        rackresult.innerText = "RackResults";
-        // focusがあたっている要素を取得
-        const elem = document.activeElement;
-        // 3文字入力したらフォーカスを外す
-        if(elem.value.length >= 1) {
-          try{
-            db.exec({
-                sql: "SELECT * FROM fruits where rack="+this.value ,//昇順でソートしてみます。
-                rowMode: "object",
-                resultRows,
-              });
-          }catch(e){
-            error(e.message);
-          }
-          if(resultRows.length==0){
-            rackresult.innerText = elem.value+" is Not registered";
-          }else{
-            for( var i=0; i<resultRows.length; i++) {
-              contanerresult.innerText= contanerresult.innerText + "... "+ resultRows[i].contaner ;
-            }
-            elem.blur();
-            next.innerText = `要素「${elem.id}」のフォーカスを外しました。`;
-            next.focus();
-
-
-          }
-
-         
-        }
-        //contaner.value="";
-      });
-
-
-      const contaner = document.querySelector('#contaner');
-      //result = document.querySelector('#result');
-      contaner.addEventListener('input', function () {
-        //result.textContent = this.value;
-        const resultRows=[];
-        try{
-          db.exec({
-             sql: "SELECT * FROM fruits where contaner="+this.value ,//昇順でソートしてみます。
-             rowMode: "object",
-             resultRows,
-            });
-           log("...sort to ID=1 Result rows:",JSON.stringify(resultRows[0].name,undefined,2));
-           
-           result.textContent = resultRows[0].name;
-
-           const parts = document.querySelector( "#partsresult" );
-           parts.textContent= resultRows[0].name ;
-
-           //const contaner = document.querySelector( "#contanerresult" );
-           //contaner.textContent= resultRows[0].price ;
-
-           const rack = document.querySelector( "#rackresult" );
-           rack.textContent= resultRows[0].gram ;
-        }catch(e){
-          error(e.message);
-        }
-        
-      });
-
-
-
-
-
       //const parts = document.getElementById("#parts");
       const parts = document.querySelector("#parts");
-      //contanerresult= document.querySelector( "#contanerresult" )
-      //rackresult = document.querySelector('#rackresult');
-      //result = document.querySelector('#result');
       parts.addEventListener('input', function () {
         //result.textContent = this.value;
         const resultRows=[];
-        contanerresult.innerText="ContanerResults";
-        rackresult.innerText = "RackResults";
+        result.innerText="Contanerquantity";
+        //rackresult.innerText = "RackResults";
         // focusがあたっている要素を取得
         const elem = document.activeElement;
         // 3文字入力したらフォーカスを外す
@@ -243,11 +169,11 @@ function _insert(_rack,_contaner,_parts) {
             error(e.message);
           }
           if(resultRows.length==0){
-            rackresult.innerText = elem.value+" is Not registered";
+            result.innerText = elem.value+" is Not registered";
           }else{
             for( var i=0; i<resultRows.length; i++) {
-              contanerresult.innerText= resultRows[i].contaner ;
-              rackresult.innerText= resultRows[i].rack ;
+              result.innerText= resultRows[i].contaner ;
+              result.innerText= result.innerText+" - "+resultRows[i].rack ;
             }
             elem.blur();
             //next.innerText = `要素「${elem.id}」のフォーカスを外しました。`;
@@ -264,19 +190,117 @@ function _insert(_rack,_contaner,_parts) {
 
 
 
+     
+
+      const rack = document.querySelector('#rack');
+      const next = document.getElementById("contaner");
+      //const rackresult= document.querySelector( "#rackresult" )
+      const result = document.querySelector( "#result" );
+      //const focus = () => document.getElementById('contaner').focus()
+      rack.addEventListener('input', function () {
+        const resultRows=[];
+        result.innerText="Regiserd Contaner";
+        //rackresult.innerText = "RackResults";
+        // focusがあたっている要素を取得
+        const elem = document.activeElement;
+        // 3文字入力したらフォーカスを外す
+        if(elem.value.length >= 1) {
+          try{
+            db.exec({
+                sql: "SELECT * FROM fruits where rack="+this.value ,//昇順でソートしてみます。
+                rowMode: "object",
+                resultRows,
+              });
+          }catch(e){
+            error(e.message);
+          }
+          if(resultRows.length==0){
+            result.innerText = elem.value+" is Not Regiserd Rack";
+          }else{
+            for( var i=0; i<resultRows.length; i++) {
+              result.innerText= result.innerText + " ... "+ resultRows[i].contaner ;
+            }
+            elem.blur();
+            next.innerText = `要素「${elem.id}」のフォーカスを外しました。`;
+            next.focus();
+
+
+          }
+
+         
+        }
+        //contaner.value="";
+      });
+
+
+      const contaner = document.querySelector('#contaner');
+      //const partsresult = document.querySelector('#partsresult');
+      contaner.addEventListener('input', function () {
+        //result.textContent = this.value;
+        const resultRows=[];
+        try{
+          db.exec({
+             sql: "SELECT * FROM fruits where contaner="+this.value ,//昇順でソートしてみます。
+             rowMode: "object",
+             resultRows,
+            });
+           log("...sort to ID=1 Result rows:",JSON.stringify(resultRows[0].contaner,undefined,2));
+           
+           result.textContent = resultRows[0].parts;
+
+           //const parts = document.querySelector( "#partsresult" );
+           //result.textContent= resultRows[0].parts ;
+
+           //const contaner = document.querySelector( "#contanerresult" );
+           //contaner.textContent= resultRows[0].price ;
+
+           const rack = document.querySelector( "#rackresult" );
+           rack.textContent= resultRows[0].gram ;
+        }catch(e){
+          error(e.message);
+        }
+        
+      });
 
 
 
 
 
+      
+
+
+
+
+
+
+
+
+
+      document.querySelector('#btn-clear-log').addEventListener('click',function(){
+        eOutput.innerText = '';
+      });
   
       document.querySelector('#btn-clear-log').addEventListener('click',function(){
         eOutput.innerText = '';
       });
+
+
       document.querySelector('#btn-clear-storage').addEventListener('click',function(){
         const sz = db.clearStorage();
         log("kvvfs",db.filename+"Storage cleared:",sz,"entries.");
       });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
       //insert
