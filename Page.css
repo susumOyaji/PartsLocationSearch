@@ -1,0 +1,49 @@
+body{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    /*background-color: rgb(202, 255, 127);*/ 
+}
+textarea {
+    font-family: monospace;
+}
+section {
+    background: black;
+    color: white;
+    border-radius: 1em;
+    padding: 1em;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) 
+}
+#test-output {
+  border: 1px inset;
+  border-radius: 0.25em;
+  padding: 0.25em;
+  /*max-height: 30em;*/
+  overflow: auto;
+  white-space: break-spaces;
+  display: flex; flex-direction: column;
+  font-family: monospace;
+  background-color:rgb(219, 25, 25);
+}
+#test-output.reverse {
+    flex-direction: column-reverse;
+}
+.option_win {
+    /*親要素*/
+    position: relative;
+    background: orange;
+    height: 200px;
+  }
+  .option_win p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform : translate(-50%,-50%);
+    transform : translate(-50%,-50%);
+    width: 100px;
+    text-align: center;/*一応BOX内の文字も中央寄せ*/
+  }
