@@ -1,97 +1,110 @@
 <!doctype html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
-    <link rel="stylesheet" href="sqlite-wasm-3400000/common/emscripten.css"/>
-    <!--<link rel="stylesheet" href="sqlite-wasm-3400000/common/testing.css"/>-->
-    <link rel="stylesheet" href="PartsLocationSerarch.css"/>
-    <title>Hello, sqlite3</title>
-  </head>
-  <body>
-    <h1>SQLite3 WASM/JS</h1>
-    <header id="titlebar"><span>sqlite3-kvvfs.js tests</span></header>
-    <!-- emscripten bits -->
-    <figure id="module-spinner">
-      <div class="spinner"></div>
-      <div class="center"><strong>Initializing app...</strong></div>
-      <div class="center">
-        On a slow internet connection this may take a moment.  If this
-        message displays for "a long time", intialization may have
-        failed and the JavaScript console may contain clues as to why.
-      </div>
-    </figure>
-    <div class="emscripten" id="module-status">Downloading...</div>
-    <div class="emscripten">
-      <progress value="0" max="100" id="module-progress" hidden="1"></progress>  
-    </div><!-- /emscripten bits -->
 
-    <div class="windows">
-      
-      <div class="serch_win">
-        <fieldset>
-          <legend>Search</legend>
-          <button id="btn-search">Search</button>
-          <button id="btn-inout">In/Out</button>
-         
-            <input type="search" id="parts"  placeholder="品目コード" size="30"><p></p>
-            <input  type="search" id="contaner" placeholder="コンテナコード" size="30"><p></p>
-            <input  type="search" id="rack"  placeholder="棚コード" size="30"><p></p>
-        </fieldset>
-      </div>
-      <div class="results_win">
-        <fieldset>
-          <legend>Results / Comment</legend>
-            <label id="result"></label><p></p>
-           
-          </fieldset>
-      </div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+  <link rel="stylesheet" href="sqlite-wasm-3400000/common/emscripten.css" />
+  <!--<link rel="stylesheet" href="sqlite-wasm-3400000/common/testing.css"/>-->
+  <link rel="stylesheet" href="PartsLocationSerarch.css" />
+  <title>Hello, sqlite3</title>
+</head>
+
+<body>
+  <h1>SQLite3 WASM/JS</h1>
+  <header id="titlebar"><span>sqlite3-kvvfs.js tests</span></header>
+  <!-- emscripten bits -->
+  <figure id="module-spinner">
+    <div class="spinner"></div>
+    <div class="center"><strong>Initializing app...</strong></div>
+    <div class="center">
+      On a slow internet connection this may take a moment. If this
+      message displays for "a long time", intialization may have
+      failed and the JavaScript console may contain clues as to why.
     </div>
+  </figure>
+  <div class="emscripten" id="module-status">Downloading...</div>
+  <div class="emscripten">
+    <progress value="0" max="100" id="module-progress" hidden="1"></progress>
+  </div><!-- /emscripten bits -->
 
-    <div class="option_win">
-      <fieldset> 
-        <legend>Options</legend>
-          <button id="btn-clear-log">Clear Display</button>
-          <button id="btn-clear-storage">Clear storage</button>
-          <button id="btn-storage-size">Approx. storage size</button>   
-          <button id="btn-init-db">(Re)init db(Add to Data</button>
-          <button id="btn-sort-db-rows-order">Sort db rows Asc</button>
-          <button id="btn-sort-db-rows-asc">Sort db rows Desc</button>
+  <div class="windows">
+
+    <div class="serch_win">
+      <fieldset>
+        <legend>Search</legend>
+        <button id="btn-search">Search</button>
+        <button id="btn-inout">In/Out</button>
+
+        <input type="search" id="parts" placeholder="品目コード" size="30">
+        <p></p>
+        <input type="search" id="contaner" placeholder="コンテナコード" size="30">
+        <p></p>
+        <input type="search" id="rack" placeholder="棚コード" size="30">
+        <p></p>
       </fieldset>
     </div>
+    <div class="results_win">
+      <fieldset>
+        <legend>Results / Comment</legend>
+        <label id="result"></label>
+        <p></p>
 
-    <div id="test-output"></div>
-    <!-- 別画面 -->
-    <div class="tabs">
-      <input id="tab_1" type="radio" name="tab_item" checked>
-      <label class="tab_item" for="tab_1">タブ1</label>
-      <input id="tab_2" type="radio" name="tab_item">
-      <label class="tab_item" for="tab_2">タブ2</label>
-      <input id="tab_3" type="radio" name="tab_item">
-      <label class="tab_item" for="tab_3">タブ3</label>
-        <div class="tab_content" id="tab_1_content">
-            <!--タブ1の内容がここに入ります-->
-        </div>
-        <div class="tab_content" id="tab_2_content">
-          <!--タブ2の内容がここに入ります-->
-        </div>
-        <div class="tab_content" id="tab_3_content">
-          <!--タブ3の内容がここに入ります-->
-        </div>
+      </fieldset>
     </div>
+  </div>
 
-    <style>
-      .toolbar {
-          display: flex;
-      }
-      .toolbar > * { margin: 0.25em; }
-      fieldset { border-radius: 0.5em; }
-    </style>
-    <script src="sqlite-wasm-3400000/jswasm/sqlite3.js"></script>
-    <script src="sqlite-wasm-3400000/common/SqliteTestUtil.js"></script>
- 
-    <script src="main.js"></script>
-  </body>
+  <div class="option_win">
+    <fieldset>
+      <legend>Options</legend>
+      <button id="btn-clear-log">Clear Display</button>
+      <button id="btn-clear-storage">Clear storage</button>
+      <button id="btn-storage-size">Approx. storage size</button>
+      <button id="btn-init-db">(Re)init db(Add to Data</button>
+      <button id="btn-sort-db-rows-order">Sort db rows Asc</button>
+      <button id="btn-sort-db-rows-asc">Sort db rows Desc</button>
+    </fieldset>
+  </div>
+
+  <div id="test-output"></div>
+  <!-- 別画面 -->
+  <div class="tabs">
+    <input id="tab_1" type="radio" name="tab_item" checked>
+    <label class="tab_item" for="tab_1">タブ1</label>
+    <input id="tab_2" type="radio" name="tab_item">
+    <label class="tab_item" for="tab_2">タブ2</label>
+    <input id="tab_3" type="radio" name="tab_item">
+    <label class="tab_item" for="tab_3">タブ3</label>
+    <div class="tab_content" id="tab_1_content">
+      <!--タブ1の内容がここに入ります-->
+    </div>
+    <div class="tab_content" id="tab_2_content">
+      <!--タブ2の内容がここに入ります-->
+    </div>
+    <div class="tab_content" id="tab_3_content">
+      <!--タブ3の内容がここに入ります-->
+    </div>
+  </div>
+
+  <style>
+    .toolbar {
+      display: flex;
+    }
+
+    .toolbar>* {
+      margin: 0.25em;
+    }
+
+    fieldset {
+      border-radius: 0.5em;
+    }
+  </style>
+  <script src="sqlite-wasm-3400000/jswasm/sqlite3.js"></script>
+  <script src="sqlite-wasm-3400000/common/SqliteTestUtil.js"></script>
+
+  <script src="main.js"></script>
+</body>
+
 </html>

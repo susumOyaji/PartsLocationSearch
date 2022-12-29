@@ -1,69 +1,107 @@
 <!DOCTYPE html>
 <html lang="ja">
-   
+
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="Page.css"/>
-    <title>ここにタイトルを書きます</title>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link rel="stylesheet" href="sqlite-wasm-3400000/common/emscripten.css" />
+    <link rel="stylesheet" href="Page.css" />
+    <title>Hello, sqlite3</title>
 </head>
+
 <body>
-   
-
-<main>
-    <h1>PartsLocationSerarch</h1>
-    <div class="option_win">
-            <h4>Enter barcode or barcode number</h4>
-            <div class="serch_win">
-                <fieldset>
-                <legend>Search</legend>
-                    <input type="search" id="select"  placeholder="Enter" ,size="30"><p></p>
-                </fieldset>
+    <main>
+        <h2>SQLite3 WASM/JS</h2>
+        <header id="titlebar"><span>sqlite3-kvvfs.js tests</span></header>
+        <h2>PartsLocationSerarch</h2>
+        <!-- emscripten bits -->
+        <figure id="module-spinner">
+            <div class="spinner"></div>
+            <div class="center"><strong>Initializing app...</strong></div>
+            <div class="center">
+                On a slow internet connection this may take a moment. If this
+                message displays for "a long time", intialization may have
+                failed and the JavaScript console may contain clues as to why.
             </div>
-           
-    </div>
-</main>
+        </figure>
+        <div class="emscripten" id="module-status">Downloading...</div>
+        <div class="emscripten">
+            <progress value="0" max="100" id="module-progress" hidden="1"></progress>
+        </div><!-- /emscripten bits -->
+        <fieldset>
+            <legend>Options</legend>
+            <button id="btn-clear-storage">Clear storage</button>
+            <button id="btn-init-db">(Re)init db(Add to Data</button>
+            <button id="btn-storage-size">Approx. storage size</button>
 
-<div class="parts">
-    <h1>Parts</h1>
-    <div class="option_win">
-            <h4>Enter barcode or barcode number</h4>
-            <div class="serch_win">
+            <button id="btn-sort-db-rows-order">Sort db rows Asc</button>
+            <button id="btn-sort-db-rows-asc">Sort db rows Desc</button>
+        </fieldset>
+        <fieldset>
+            <div class="option_win">
+                <h4>Enter barcode or barcode number</h4>
                 <fieldset>
-                <legend>Search</legend>
-                    <input type="search" id ="parts"  placeholder="Enter" size="30"><p></p>
+                    <legend>Search</legend> <input type="search" id="select" placeholder="Enter" ,size="30">
+                    <p></p>
                 </fieldset>
+                <div id="test-output"></div>
             </div>
-    </div>
-</div>
-
-<div class="contaner">
-    <h2>Contaner</h2>
-    <div class="option_win">
-            <h4>Enter barcode or barcode number</h4>
-            <div class="serch_win">
-                <fieldset>
-                <legend>Search</legend>
-                    <input type="search" id="contaner"  placeholder="Enter" size="30"><p></p>
-                </fieldset>
+        </fieldset>
+        <fieldset>
+            <legend>Parts</legend>
+            <div class="parts">
+               
+                <div class="option_win">
+                    <h4>Enter barcode or barcode number</h4>
+                    <fieldset>
+                        <legend>Search</legend>
+                        <input type="search" id="parts" placeholder="Enter" size="30">
+                        <p></p>
+                    </fieldset>
+                    <div id="parts-output"></div>
+                </div>
             </div>
-    </div>
-</div>
-
-<div class="rack">
-    <h2>Rack</h2>
-    <div class="option_win">
-            <h4>Enter barcode or barcode number</h4>
-            <div class="serch_win">
-                <fieldset>
-                <legend>Search</legend>
-                    <input type="search" id="rack"  placeholder="Enter" size="30"><p></p>
-                </fieldset>
+        </fieldset>
+        <div class="contaner">
+            <h2>Contaner</h2>
+            <div class="option_win">
+                <h4>Enter barcode or barcode number</h4>
+                <div class="serch_win">
+                    <fieldset>
+                        <legend>Search</legend>
+                        <input type="search" id="contaner" placeholder="Enter" size="30">
+                        <p></p>
+                    </fieldset>
+                </div>
             </div>
-    </div>
-</div>
+        </div>
 
-   
+        <div class="rack">
+            <h2>Rack</h2>
+            <div class="option_win">
+                <h4>Enter barcode or barcode number</h4>
+                <div class="serch_win">
+                    <fieldset>
+                        <legend>Search</legend>
+                        <input type="search" id="rack" placeholder="Enter" size="30">
+                        <p></p>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
 
+    </main>
+
+
+
+
+
+
+    <script src="sqlite-wasm-3400000/jswasm/sqlite3.js"></script>
+    <script src="sqlite-wasm-3400000/common/SqliteTestUtil.js"></script>
     <script src="Page.js"></script>
 </body>
+
 </html>

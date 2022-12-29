@@ -6,6 +6,7 @@ body{
 }
 textarea {
     font-family: monospace;
+    display: block;
 }
 
 main{
@@ -14,50 +15,18 @@ main{
   border-radius: 1em;
   padding: 1em;
   position: absolute;
-  top: 15%;
+  /*line-height:30px;*/
+  top: 50%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%) 
 }
 
-.parts{
-  background: black;
-  color: white;
-  border-radius: 1em;
-  padding: 1em;
-  position: absolute;
-  top: 45%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%) 
-}
 
-.contaner{
-  background: black;
-  color: white;
-  border-radius: 1em;
-  padding: 1em;
-  position: absolute;
-  top: 75%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%) 
-}
-
-.rack{
-  background: rgb(148, 150, 143);
-  color: white;
-  border-radius: 1em;
-  padding: 1em;
-  position: absolute;
-  top: 105%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%) 
-}
 
 .option_win {
   /*親要素*/
+  border-radius: 0.25em;
   position: relative;
   background: rgb(179, 177, 174);
   height: 150px;
@@ -72,18 +41,18 @@ main{
   white-space: break-spaces;
   display: flex; flex-direction: column;
   font-family: monospace;
-  background-color:rgb(219, 25, 25);
+  background-color:rgb(252, 3, 3);
 }
 #test-output.reverse {
     flex-direction: column-reverse;
 }
 
-  .option_win p {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform : translate(-50%,-50%);
-    transform : translate(-50%,-50%);
-    width: 100px;
-    text-align: center;/*一応BOX内の文字も中央寄せ*/
-  }
+.option_win p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform : translate(-50%,-50%);
+  transform : translate(-50%,-50%);
+  width: 100px;
+  text-align: center;/*一応BOX内の文字も中央寄せ*/
+}
