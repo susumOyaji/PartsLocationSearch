@@ -1,5 +1,5 @@
 'use strict';
-
+var db;
 
 (function () {
   const T = self.SqliteTestUtil;
@@ -53,6 +53,65 @@
     log("db.storageSize():", db.storageSize());
 
 
+    function insert(_rack, _contaner, _parts) {
+      const resultRows = [];
+
+      db.exec({
+        sql: "insert into fruits(rack,contaner,parts) values ($a,$b,$c)",
+        // bind by parameter name...
+        bind: { $a: _rack, $b: _contaner, $c: _parts }
+      });
+
+      db.exec({
+        sql: "SELECT * FROM fruits",//実行するSQL
+        rowMode: "object",//コールバックの最初の引数のタイプを指定します,
+        //'array'(デフォルト), 'object', 'stmt'現在のStmtをコールバックに渡します
+        resultRows,//returnValue:
+      });
+      return resultRows;
+    }
+
+
+    //insert
+    document.querySelector('#btn-init-db').addEventListener('click', function () {
+      try {
+        db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY ,rack,contaner,parts INTEGER DEFAULT 'NO VALUE')");
+
+
+        log("Insert using a prepared statement...");
+        let i;
+        let q = db.prepare([
+          "insert into fruits(rack,contaner,parts) ",
+          "values(?,?,?)"
+        ]);
+        try {
+          q.bind(1, 1).bind(2, 1).bind(3, 10500).stepReset();
+          q.bind(1, 1).bind(2, 2).bind(3, 10600).stepReset();
+          q.bind(1, 1).bind(2, 3).bind(3, 10700).stepReset();
+          for (i = 105; i <= 107; ++i) {
+            q.bind(1, i).bind(2, i * 10).bind(3, i * 100).stepReset();
+          }
+          var ret = insert(99, 99, 99);
+        } finally {
+          q.finalize();
+        }
+
+        const resultRows = [];
+        db.exec({
+          sql: "SELECT * FROM fruits",//実行するSQL
+          rowMode: "object",//コールバックの最初の引数のタイプを指定します,
+          //'array'(デフォルト), 'object', 'stmt'現在のStmtをコールバックに渡します
+          resultRows,//returnValue:
+        });
+        log("DB Delete All. and Reconfiguration");
+        log("..._insert...Result rows:", JSON.stringify(resultRows, undefined, 2));
+
+      } catch (e) {
+        error(e.message);
+      }
+    });
+
+
     document.querySelector('#btn-clear-storage').addEventListener('click', function () {
       const sz = db.clearStorage();
       log("kvvfs", db.filename + "Storage cleared:", sz, "entries.");
@@ -61,7 +120,7 @@
 
 
 
-    
+
     document.querySelector('#parts').addEventListener('click', function () {
       const result = document.querySelector("#parts-output");
       const resultRows = [];
@@ -204,7 +263,7 @@
     runTests(sqlite3);
     //demo1(sqlite3);//実行メソッド
   });
-
+  //document.getElementById('parts').click()
 
 
 })();
