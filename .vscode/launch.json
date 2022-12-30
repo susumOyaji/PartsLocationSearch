@@ -13,6 +13,13 @@
         },
         {
             "type": "msedge",
+            "request": "launch",
+            "name": "localhost に対して Page を起動する",
+            "url": "http://127.0.0.1:3000/Page.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "msedge",
             "name": "http://127.0.0.1:3000/index.html",
             "request": "launch",
             "url": "http://127.0.0.1:3000/index.html"
