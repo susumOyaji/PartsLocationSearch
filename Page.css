@@ -8,6 +8,18 @@ textarea {
     font-family: monospace;
     display: block;
 }
+.titlebar1 {
+  font-size: 32px;
+  color: orange;
+  font-weight:bold;
+}
+.titlebar2 {
+  font-size: 15px;
+}
+.titlebar3 {
+  font-size: 25px;
+  color: yellow;
+}
 
 main{
   background: black;
@@ -30,6 +42,11 @@ main{
   position: relative;
   background: rgb(179, 177, 174);
   height: 150px;
+}
+.sub_win{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 
 #test-output {

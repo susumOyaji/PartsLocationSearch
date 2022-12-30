@@ -13,9 +13,9 @@
 
 <body>
     <main>
-        <h2>SQLite3 WASM/JS</h2>
-        <header id="titlebar"><span>sqlite3-kvvfs.js tests</span></header>
-        <h2>PartsLocationSerarch</h2>
+        <label class="titlebar1">QLite3 WASM/JS</label>
+        <label class="titlebar2"><span>sqlite3-kvvfs.js tests</span></label>
+        <p><label class="titlebar3">PartsLocationSerarch</label></p>
         <!-- emscripten bits -->
         <figure id="module-spinner">
             <div class="spinner"></div>
@@ -35,63 +35,45 @@
             <button id="btn-clear-storage">Clear storage</button>
             <button id="btn-init-db">(Re)init db(Add to Data</button>
             <button id="btn-storage-size">Approx. storage size</button>
-
             <button id="btn-sort-db-rows-order">Sort db rows Asc</button>
             <button id="btn-sort-db-rows-asc">Sort db rows Desc</button>
         </fieldset>
         <fieldset>
             <div class="option_win">
-      
                 <fieldset>
-                    <legend>Enter barcode or barcode number</legend> <input type="search" id="select" placeholder="Enter" ,size="30">
+                    <legend>Enter barcode or barcode number</legend> <input type="search" id="select"
+                        placeholder="Enter" ,size="30">
                     <p></p>
                 </fieldset>
                 <div id="test-output"></div>
             </div>
-        </fieldset>
-        <fieldset>
-            <legend>Parts</legend>
-            <div class="parts">
-               
-                <div class="option_win">
-               
-                    <fieldset>
-                        <legend>Enter barcode or barcode number</legend>
-                        <input type="search" id="parts" placeholder="Enter" size="30">
-                        <p></p>
-                    </fieldset>
+            <div class="sub_win">
+                <fieldset>
+                    <legend>Parts</legend>
+                    <legend>Enter barcode or barcode number</legend>
+                    <input type="search" id="parts" placeholder="Enter" size="30">
+                    
                     <div id="parts-output"></div>
-                </div>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Contaner</legend>
+                    <legend>Enter barcode or barcode number</legend>
+                    <input type="search" id="contaner" placeholder="Enter" size="30">
+                    
+                    <div id="contaner-output"></div>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Rack</legend>
+                    <legend>Enter barcode or barcode number</legend>
+                    <input type="search" id="rack" placeholder="Enter" size="30">
+                
+                    <div id="rack-output"></div>
+                </fieldset>
+                
             </div>
         </fieldset>
-        <div class="contaner">
-            <h2>Contaner</h2>
-            <div class="option_win">
-          
-                <div class="serch_win">
-                    <fieldset>
-                        <legend>Enter barcode or barcode number</legend>
-                        <input type="search" id="contaner" placeholder="Enter" size="30">
-                        <p></p>
-                    </fieldset>
-                </div>
-            </div>
-        </div>
-
-        <div class="rack">
-            <h2>Rack</h2>
-            <div class="option_win">
-               
-                <div class="serch_win">
-                    <fieldset>
-                        <legend>Enter barcode or barcode number</legend>
-                        <input type="search" id="rack" placeholder="Enter" size="30">
-                        <p></p>
-                    </fieldset>
-                </div>
-            </div>
-        </div>
-
     </main>
 
 
