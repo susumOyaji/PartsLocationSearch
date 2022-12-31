@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Html5 Web SQLite Database Example</title>
+    <script type="text/javascript" src="example.js" charset="utf-8"></script>
+    <style>
+        .block-class {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .label-class {
+            width: 50px;
+            display: inline-block;
+            text-align: right;
+            vertical-align: top;
+        }
+    </style>
+</head>
+
+<body onload="initApp()">
+    <h3>Html5 Web SQLite Database Example.</h3>
+    <div class="block-class">
+        <div class="block-class">
+            <label class="label-class">
+                Name:
+            </label>
+            <input type="text" id="userName" placeholder="Input user name." />
+        </div>
+
+        <div class="block-class">
+            <label class="label-class">
+                Email:
+            </label>
+            <input type="text" id="userEmail" placeholder="Input user email." />
+        </div>
+
+        <div class="block-class">
+            <label class="label-class">
+                Note:
+            </label>
+            <textarea id="userNote" placeholder="Input user note."></textarea>
+        </div>
+
+        <div class="block-class">
+            <label class="label-class">
+
+            </label>
+            <input type="button" id="saveUserInfoBtn" value="Save"
+                onclick="saveUserData('userName', 'userEmail', 'userNote')" />
+        </div>
+    </div>
+    <hr>
+    <div class="block-class">
+        <input type="text" id="searchByNameKeyword" placeholder="Input the user name to search." size="30" />
+        <input type="button" id="searchByNameBtn" value="Search" onclick="searchByName('searchByNameKeyword')" />
+        <input type="button" id="clearLocalStorageBtn" value="Clear UserData Table" onclick="clearUserDataTable()" />
+    </div>
+    <output id="outputList" style="display:block;margin-top: 10px;"></output>
+</body>
+
+</html>
