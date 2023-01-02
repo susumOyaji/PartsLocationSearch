@@ -4,6 +4,7 @@ var db;
 (function () {
   const T = self.SqliteTestUtil;
   const toss = function (...args) { throw new Error(args.join(' ')) };
+  
   const debug = console.debug.bind(console);
   const eOutput = document.querySelector('#test-output');
   const logC = console.log.bind(console)
