@@ -141,6 +141,9 @@ var db;
           error(e.message);
         }
         if (resultRows.length == 0) {
+          alert(elem.value + " is Not Regiserd Parts");
+          confirm(elem.value + " is Not Regiserd Parts");
+          prompt(elem.value + " is Not Regiserd Parts");
           result.innerText = elem.value + " is Not registered";
         } else {
           for (var i = 0; i < resultRows.length; i++) {
@@ -209,7 +212,8 @@ var db;
           error(e.message);
         }
         if (resultRows.length == 0) {
-          result.innerText = elem.value + " is Not Regiserd Rack";
+          alert(elem.value + " is Not Regiserd Rack");
+          //result.innerText = elem.value + " is Not Regiserd Rack";
         } else {
           for (var i = 0; i < resultRows.length; i++) {
             result.innerText = result.innerText + " ... " + resultRows[i].contaner;
