@@ -13,68 +13,83 @@
 
 <body>
     <main>
-        <label class="titlebar3">PartsLocationSerarch</label><p></p>
-        <label class="titlebar1">SQLite3 WASM/JS</label>
-        <label class="titlebar2"><span>sqlite3-kvvfs.js tests</span></label>
-        
-        <!-- emscripten bits -->
-        <figure id="module-spinner">
-            <div class="spinner"></div>
-            <div class="center"><strong>Initializing app...</strong></div>
-            <div class="center">
-                On a slow internet connection this may take a moment. If this
-                message displays for "a long time", intialization may have
-                failed and the JavaScript console may contain clues as to why.
-            </div>
-        </figure>
-        <div class="emscripten" id="module-status">Downloading...</div>
-        <div class="emscripten">
-            <progress value="0" max="100" id="module-progress" hidden="1"></progress>
-        </div><!-- /emscripten bits -->
         <fieldset>
-            <legend>Options</legend>
-            <button id="btn-clear-storage">Clear storage</button>
-            <button id="btn-init-db">(Re)init db(Add to Data</button>
-            <button id="btn-storage-size">Approx. storage size</button>
-            <button id="btn-sort-db-rows-order">Sort db rows Asc</button>
-            <button id="btn-sort-db-rows-asc">Sort db rows Desc</button>
+            <div class="title">
+                <div class="titlebar">
+                    <label class="titlebar3">PartsLocationSerarch</label>
+                    <p></p>
+                    <label class="titlebar1">SQLite3 WASM/JS</label><span></span>
+                    <label class="titlebar2">sqlite3-kvvfs.js tests</label>
+                </div>
+                <div class="flex-button">
+                    <fieldset>
+                        <legend>For DeBugging</legend>
+                        <button id="btn-clear-storage">Clear storage</button>
+                        <button id="btn-init-db">(Re)init db(Add to Data</button>
+                        <button id="btn-storage-size">Approx. storage size</button>
+                        <button id="btn-sort-db-rows-order">Sort db rows Asc</button>
+                        <button id="btn-sort-db-rows-asc">Sort db rows Desc</button>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- emscripten bits -->
+            <figure id="module-spinner">
+                <div class="spinner"></div>
+                <div class="center"><strong>Initializing app...</strong></div>
+                <div class="center">
+                    On a slow internet connection this may take a moment. If this
+                    message displays for "a long time", intialization may have
+                    failed and the JavaScript console may contain clues as to why.
+                </div>
+            </figure>
+            <div class="emscripten" id="module-status">Downloading...</div>
+            <div class="emscripten">
+                <progress value="0" max="100" id="module-progress" hidden="1"></progress>
+            </div><!-- /emscripten bits -->
+            <div id="test-output"></div>
+            <div id="test-output1"></div>
         </fieldset>
+
+
         <fieldset>
             <div class="option_win">
+
                 <fieldset>
-                    <legend>Enter barcode or barcode number</legend> <input type="search" id="select"
-                        placeholder="Enter" ,size="30">
+                    
+                    <label for="name">Enter barcode or barcode number(Automatic judgment)</label>
+                    <legend>Search or Registration</legend> <input type="search" id="select" ,placeholder="Enter" ,size="30">
                     <p></p>
                 </fieldset>
-                <div id="test-output"></div>
-            </div>
-            <div class="sub_win">
-                <fieldset>
-                    <legend>Parts</legend>
-                    <legend>Enter barcode or barcode number</legend>
-                    <input type="search" id="parts" placeholder="Enter" size="30">
-                    
-                    <div id="parts-output"></div>
-                </fieldset>
-                
-                <fieldset>
-                    <legend>Contaner</legend>
-                    <legend>Enter barcode or barcode number</legend>
-                    <input type="search" id="contaner" placeholder="Enter" size="30">
-                    
-                    <div id="contaner-output"></div>
-                </fieldset>
-                
-                <fieldset>
-                    <legend>Rack</legend>
-                    <legend>Enter barcode or barcode number</legend>
-                    <input type="search" id="rack" placeholder="Enter" size="30">
-                
-                    <div id="rack-output"></div>
-                </fieldset>
-                
+                <div id="select-output"></div>
             </div>
         </fieldset>
+        <div class="sub_win">
+            <fieldset>
+                <legend>Parts()</legend>
+                <legend>Enter barcode or barcode number</legend>
+                <input type="search" id="parts" placeholder="Enter" size="30">
+
+                <div id="parts-output"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Contaner(c)</legend>
+                <legend>Enter barcode or barcode number</legend>
+                <input type="search" id="contaner" placeholder="Enter" size="30">
+
+                <div id="contaner-output"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Rack(r)</legend>
+                <legend>Enter barcode or barcode number</legend>
+                <input type="search" id="rack" placeholder="Enter" size="30">
+
+                <div id="rack-output"></div>
+            </fieldset>
+
+        </div>
+
     </main>
 
 

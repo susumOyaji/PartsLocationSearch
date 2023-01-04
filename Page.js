@@ -7,7 +7,9 @@ var db;
   
   const debug = console.debug.bind(console);
   const eOutput = document.querySelector('#test-output');
+  const eOutput1 = document.querySelector('#test-output1');
   const logC = console.log.bind(console)
+
   const logE = function (domElement) {
     eOutput.append(domElement);
   };
@@ -86,9 +88,9 @@ var db;
           "values(?,?,?)"
         ]);
         try {
-          q.bind(1, 1).bind(2, 1).bind(3, 10500).stepReset();
-          q.bind(1, 1).bind(2, 2).bind(3, 10600).stepReset();
-          q.bind(1, 1).bind(2, 3).bind(3, 10700).stepReset();
+          q.bind(1, 'r001').bind(2, 'c001').bind(3, '10500').stepReset();
+          q.bind(1, 'r001').bind(2, 'c002').bind(3, '10600').stepReset();
+          q.bind(1, 'r002').bind(2, 'c003').bind(3, '10700').stepReset();
           for (i = 105; i <= 107; ++i) {
             q.bind(1, i).bind(2, i * 10).bind(3, i * 100).stepReset();
           }
@@ -141,9 +143,7 @@ var db;
           error(e.message);
         }
         if (resultRows.length == 0) {
-          alert(elem.value + " is Not Regiserd Parts");
-          confirm(elem.value + " is Not Regiserd Parts");
-          prompt(elem.value + " is Not Regiserd Parts");
+       
           result.innerText = elem.value + " is Not registered";
         } else {
           for (var i = 0; i < resultRows.length; i++) {

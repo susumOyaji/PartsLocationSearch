@@ -34,7 +34,28 @@ main{
   margin-right: -50%;
   transform: translate(-50%, -50%) 
 }
+.title{
+  flex-direction: row;
+  flex-wrap: nowrap;
+  display:flex;
+  justify-content:space-between;
+  
+}
+.titlebar{
+  flex-direction: column;
+  flex-wrap: wrap;
+ 
+ 
+}
+.flex-button{
+  /*display: flex;*/
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 300px;
+  border-radius: 1.25em;
 
+  /*text-align: center;*/
+}
 
 
 .option_win {
@@ -42,12 +63,16 @@ main{
   border-radius: 0.25em;
   position: relative;
   background: rgb(179, 177, 174);
-  height: 150px;
+  height: 80px;
+  text-align: center;
+  color: blue;
+  font-weight: bold;
 }
 .sub_win{
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  border-radius: 0.25em;
 }
 
 #test-output {
@@ -59,7 +84,7 @@ main{
   white-space: break-spaces;
   display: flex; flex-direction: column;
   font-family: monospace;
-  background-color:rgb(252, 3, 3);
+  background-color:orangered;
 }
 #test-output.reverse {
     flex-direction: column-reverse;
@@ -73,4 +98,5 @@ main{
   transform : translate(-50%,-50%);
   width: 100px;
   text-align: center;/*一応BOX内の文字も中央寄せ*/
+  color: red;
 }
