@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!-- SQLite3 WASM/JS sample -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>SQLite</title>
+    <meta name="description" content="Zenn" />
+  </head>
+  <body>
+    <h3>test2.html </h3>
+    <hr />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.min.js"></script>
+    <script>
+    initSqlJs({
+        locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${file}`
+    }).then(SQL => {
+        const db = new SQL.Database();
+        let res = JSON.stringify(db.exec("SELECT sqlite_version();"));
+        console.log(res)
+        res = JSON.stringify(db.exec(`CREATE TABLE users(id INTEGER PRIMARY KEY, name TEXT);`));
+        console.log(res)
+        res = JSON.stringify(db.exec(`INSERT INTO users(name) VALUES ('hoge123');`));
+        console.log(res)
+        res = JSON.stringify(db.exec(`SELECT * FROM users;`));
+        console.log(res)
+    });
+    </script>
+  </body>
+</html>

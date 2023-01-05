@@ -63,10 +63,12 @@ main{
   border-radius: 0.25em;
   position: relative;
   background: rgb(179, 177, 174);
-  height: 80px;
+  height: 70px;
   text-align: center;
   color: blue;
   font-weight: bold;
+
+
 }
 .sub_win{
   display: flex;

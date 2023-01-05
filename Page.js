@@ -4,7 +4,7 @@ var db;
 (function () {
   const T = self.SqliteTestUtil;
   const toss = function (...args) { throw new Error(args.join(' ')) };
-  
+
   const debug = console.debug.bind(console);
   const eOutput = document.querySelector('#test-output');
   const eOutput1 = document.querySelector('#test-output1');
@@ -78,7 +78,7 @@ var db;
     //insert
     document.querySelector('#btn-init-db').addEventListener('click', function () {
       try {
-        db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY ,rack,contaner,parts INTEGER DEFAULT 'NO VALUE')");
+        db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY ,rack,contaner TEXT,parts INTEGER DEFAULT 'NO VALUE')");
 
 
         log("Insert using a prepared statement...");
@@ -91,10 +91,10 @@ var db;
           q.bind(1, 'r001').bind(2, 'c001').bind(3, '10500').stepReset();
           q.bind(1, 'r001').bind(2, 'c002').bind(3, '10600').stepReset();
           q.bind(1, 'r002').bind(2, 'c003').bind(3, '10700').stepReset();
-          for (i = 105; i <= 107; ++i) {
-            q.bind(1, i).bind(2, i * 10).bind(3, i * 100).stepReset();
-          }
-          var ret = insert(99, 99, 99);
+          //for (i = 105; i <= 107; ++i) {
+          //  q.bind(1, i).bind(2, i * 10).bind(3, i * 100).stepReset();
+          //}
+          //var ret = insert(99, 99, 99);
         } finally {
           q.finalize();
         }
@@ -124,18 +124,16 @@ var db;
 
 
 
-    document.querySelector('#parts').addEventListener('click', function () {
-      const result = document.querySelector("#parts-output");
-      const resultRows = [];
-      //result.innerText="Contanerquantity";
 
-      // focusがあたっている要素を取得
-      const elem = document.activeElement;
-      // 3文字入力したらフォーカスを外す
-      if (elem.value.length >= 1) {
+    const result = document.querySelector("#select-output");
+    function _parts(value) {
+      
+      const resultRows = [];
+
+      if (value.length >= 1) {
         try {
           db.exec({
-            sql: "SELECT * FROM fruits where parts=" + this.value,//昇順でソートしてみます。
+            sql: "SELECT * FROM fruits where parts=" + value,//昇順でソートしてみます。
             rowMode: "object",
             resultRows,
           });
@@ -143,57 +141,54 @@ var db;
           error(e.message);
         }
         if (resultRows.length == 0) {
-       
-          result.innerText = elem.value + " is Not registered";
+
+          result.innerText = value + " is Not registered";
         } else {
           for (var i = 0; i < resultRows.length; i++) {
             result.innerText = resultRows[i].contaner;
             result.innerText = result.innerText + " - " + resultRows[i].rack;
           }
-          elem.blur();
-          //next.innerText = `要素「${elem.id}」のフォーカスを外しました。`;
-          //next.focus();
-
 
         }
 
       }
 
-    });
+    }
 
 
-    document.querySelector('#contaner').addEventListener('input', function () {
-      //result.textContent = this.value;
+    function _contaner(value) {
       const resultRows = [];
-      try {
-        db.exec({
-          sql: "SELECT * FROM fruits where contaner=" + this.value,//昇順でソートしてみます。
-          rowMode: "object",
-          resultRows,
-        });
-        log("...sort to ID=1 Result rows:", JSON.stringify(resultRows[0].contaner, undefined, 2));
 
-        result.textContent = resultRows[0].parts;
+      if (value.length >= 1) {
+        try {
+          db.exec({
+            sql: "SELECT * FROM fruits where contaner=" + value,//昇順でソートしてみます。
+            rowMode: "object",
+            resultRows,
+          });
+        } catch (e) {
+          error(e.message);
+        }
+        if (resultRows.length == 0) {
 
-        //const parts = document.querySelector( "#partsresult" );
-        //result.textContent= resultRows[0].parts ;
+          result.innerText = value + " is Not registered";
+        } else {
+          for (var i = 0; i < resultRows.length; i++) {
+            result.innerText = resultRows[i].parts;
+            result.innerText = result.innerText + " - " + resultRows[i].rack;
+          }
 
-        //const contaner = document.querySelector( "#contanerresult" );
-        //contaner.textContent= resultRows[0].price ;
+        }
 
-        const rack = document.querySelector("#rackresult");
-        rack.textContent = resultRows[0].gram;
-      } catch (e) {
-        error(e.message);
       }
 
-    });
+    };
 
 
-    document.querySelector('#rack').addEventListener('input', function () {
+    function _rack() {
       const next = document.getElementById("contaner");
       //const rackresult= document.querySelector( "#rackresult" )
-      const result = document.querySelector("#result");
+      const result = document.querySelector("#select-output");
       //const focus = () => document.getElementById('contaner').focus()
       const resultRows = [];
       result.innerText = "Regiserd Contaner";
@@ -228,7 +223,7 @@ var db;
 
       }
       //contaner.value="";
-    });
+    };
 
 
 
@@ -244,7 +239,9 @@ var db;
           break;
         case "c": //「data」が「c」の時実行する。
           console.log("Contaner");
-          document.getElementById("contaner").focus();
+          _contaner(a);
+          //document.getElementById("contaner").focus();
+          //document.querySelector("#selct-output")
           break;
         case "r"://「data」が「r」の時実行する。
           console.log("Rack");
@@ -252,11 +249,11 @@ var db;
           break;
         default: //上該のすべてのCASEに当てはまらないときに実行する。
           console.log("Parts");
-          document.getElementById("parts").focus();
-          document.getElementById('parts').value = a;
+          //document.getElementById("parts").focus();
+          //document.getElementById('parts').value = a;
           /// clickイベントを発火させる
-          document.getElementById('parts').click()
-
+          //document.getElementById('parts').click()
+          _parts(a);
           break;
       }
 

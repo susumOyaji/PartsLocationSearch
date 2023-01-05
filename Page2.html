@@ -52,51 +52,20 @@
 
 
         <fieldset>
+            <legend>Search or Registration</legend>
             <div class="option_win">
 
-                <fieldset>
-                    <legend>Search or Registration</legend>
-                    <label>Enter barcode or barcode number(Automatic judgment)</label>
-                   
-                    <input type="search" id="select" ,placeholder="Enter" ,size="30">
-                    
-                </fieldset>
-                <div id="select-output"></div>
+                <label>Enter barcode or barcode number(Automatic judgment)</label>
+                <br>
+                <input type="search" id="select" placeholder="Enter" size="30">
             </div>
         </fieldset>
-        <div class="sub_win">
-            <fieldset>
-                <legend>Parts()</legend>
-                <legend>Enter barcode or barcode number</legend>
-                <input type="search" id="parts" placeholder="Enter" size="30">
-
-                <div id="parts-output"></div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Contaner(c)</legend>
-                <legend>Enter barcode or barcode number</legend>
-                <input type="search" id="contaner" placeholder="Enter" size="30">
-
-                <div id="contaner-output"></div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Rack(r)</legend>
-                <legend>Enter barcode or barcode number</legend>
-                <input type="search" id="rack" placeholder="Enter" size="30">
-
-                <div id="rack-output"></div>
-            </fieldset>
-
-        </div>
+        <fieldset>
+            <legend>Search Results</legend>
+            <div id="select-output"></div>
+        </fieldset>
 
     </main>
-
-
-
-
-
 
     <script src="sqlite-wasm-3400000/jswasm/sqlite3.js"></script>
     <script src="sqlite-wasm-3400000/common/SqliteTestUtil.js"></script>
