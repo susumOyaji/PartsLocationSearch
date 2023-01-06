@@ -90,7 +90,7 @@ var db;
           "values(?,?,?)"
         ]);
         try {
-          q.bind(1, 'r001').bind(2, 'C001').bind(3, '10500').stepReset();
+          q.bind(1, 'r001').bind(2, 'c001').bind(3, '10500').stepReset();
           q.bind(1, 'r001').bind(2, 'c002').bind(3, '10600').stepReset();
           q.bind(1, 'r002').bind(2, 'c003').bind(3, '10700').stepReset();
           //for (i = 105; i <= 107; ++i) {
