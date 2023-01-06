@@ -53,7 +53,9 @@ var db;
     const theStore = 's' === dbStorage[0] ? sessionStorage : localStorage;
     const db = new oo.JsStorageDb(dbStorage);
     // Or: oo.DB(dbStorage, 'c', 'kvvfs')
-    log("db.storageSize():", db.storageSize());
+    log("size.storageSize(", dbStorage, ") says", db.storageSize(),
+      "bytes");
+
 
 
     function insert(_rack, _contaner, _parts) {
@@ -78,7 +80,7 @@ var db;
     //insert
     document.querySelector('#btn-init-db').addEventListener('click', function () {
       try {
-        db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY ,rack,contaner TEXT,parts INTEGER DEFAULT 'NO VALUE')");
+        db.exec("CREATE TABLE IF NOT EXISTS fruits(id INTEGER PRIMARY KEY ,rack TEXT,contaner TEXT,parts TEXT DEFAULT 'NO VALUE')");
 
 
         log("Insert using a prepared statement...");
@@ -88,13 +90,13 @@ var db;
           "values(?,?,?)"
         ]);
         try {
-          q.bind(1, 'r001').bind(2, 'c001').bind(3, '10500').stepReset();
+          q.bind(1, 'r001').bind(2, 'C001').bind(3, '10500').stepReset();
           q.bind(1, 'r001').bind(2, 'c002').bind(3, '10600').stepReset();
           q.bind(1, 'r002').bind(2, 'c003').bind(3, '10700').stepReset();
           //for (i = 105; i <= 107; ++i) {
           //  q.bind(1, i).bind(2, i * 10).bind(3, i * 100).stepReset();
           //}
-          //var ret = insert(99, 99, 99);
+          //var ret = insert(99, "99", 99);
         } finally {
           q.finalize();
         }
@@ -115,6 +117,15 @@ var db;
     });
 
 
+
+    document.querySelector('#btn-clear-log').addEventListener('click', function () {
+      eOutput.innerText = '';
+      log("Loaded module:", capi.sqlite3_libversion(), capi.sqlite3_sourceid());
+      log("size.storageSize(", dbStorage, ") says", db.storageSize(),
+        "bytes");
+      log("Display  Delete All. and Reconfiguration");
+    });
+
     document.querySelector('#btn-clear-storage').addEventListener('click', function () {
       const sz = db.clearStorage();
       log("kvvfs", db.filename + "Storage cleared:", sz, "entries.");
@@ -127,13 +138,13 @@ var db;
 
     const result = document.querySelector("#select-output");
     function _parts(value) {
-      
+
       const resultRows = [];
 
       if (value.length >= 1) {
         try {
           db.exec({
-            sql: "SELECT * FROM fruits where parts=" + value,//昇順でソートしてみます。
+            sql: "select * from fruits where parts=" + value,//昇順でソートしてみます。
             rowMode: "object",
             resultRows,
           });
@@ -157,13 +168,19 @@ var db;
 
 
     function _contaner(value) {
+      var value;
+      var sqlString = `select * from fruits where contaner='${value}'`;
+
+
+      
       const resultRows = [];
 
       if (value.length >= 1) {
         try {
           db.exec({
-            sql: "SELECT * FROM fruits where contaner=" + value,//昇順でソートしてみます。
-            rowMode: "object",
+            //sql: "select * from fruits where contaner = '${value}'",//昇順でソートしてみます。
+            sql: sqlString,
+            rowMode: 'object',
             resultRows,
           });
         } catch (e) {
@@ -171,7 +188,8 @@ var db;
         }
         if (resultRows.length == 0) {
 
-          result.innerText = value + " is Not registered";
+          result.innerText = value + " contaner is Not registered";
+          console.log(sqlString);
         } else {
           for (var i = 0; i < resultRows.length; i++) {
             result.innerText = resultRows[i].parts;
@@ -185,21 +203,13 @@ var db;
     };
 
 
-    function _rack() {
-      const next = document.getElementById("contaner");
-      //const rackresult= document.querySelector( "#rackresult" )
-      const result = document.querySelector("#select-output");
-      //const focus = () => document.getElementById('contaner').focus()
+    function _rack(value) {
       const resultRows = [];
-      result.innerText = "Regiserd Contaner";
-      //rackresult.innerText = "RackResults";
-      // focusがあたっている要素を取得
-      const elem = document.activeElement;
-      // 3文字入力したらフォーカスを外す
-      if (elem.value.length >= 1) {
+
+      if (value.length >= 1) {
         try {
           db.exec({
-            sql: "SELECT * FROM fruits where rack=" + this.value,//昇順でソートしてみます。
+            sql: "SELECT * FROM fruits where rack=" + value,//昇順でソートしてみます。
             rowMode: "object",
             resultRows,
           });
@@ -244,6 +254,7 @@ var db;
           //document.querySelector("#selct-output")
           break;
         case "r"://「data」が「r」の時実行する。
+          _rack(a);
           console.log("Rack");
           document.getElementById("rack").focus();
           break;
