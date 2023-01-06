@@ -230,10 +230,7 @@ var db;
           for (var i = 0; i < resultRows.length; i++) {
             result.innerText = result.innerText + " ... " + resultRows[i].contaner;
           }
-          elem.blur();
-          next.innerText = `要素「${elem.id}」のフォーカスを外しました。`;
-          next.focus();
-
+         
 
         }
 
@@ -263,7 +260,7 @@ var db;
         case "r"://「data」が「r」の時実行する。
           _rack(a);
           console.log("Rack");
-          document.getElementById("rack").focus();
+          //document.getElementById("rack").focus();
           break;
         default: //上該のすべてのCASEに当てはまらないときに実行する。
           console.log("Parts");
