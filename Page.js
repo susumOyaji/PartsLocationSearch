@@ -138,13 +138,16 @@ var db;
 
     const result = document.querySelector("#select-output");
     function _parts(value) {
+      var value;
+      var sqlString = `select * from fruits where parts='${value}'`;
+
 
       const resultRows = [];
 
       if (value.length >= 1) {
         try {
           db.exec({
-            sql: "select * from fruits where parts=" + value,//昇順でソートしてみます。
+            sql: sqlString,
             rowMode: "object",
             resultRows,
           });
@@ -172,13 +175,12 @@ var db;
       var sqlString = `select * from fruits where contaner='${value}'`;
 
 
-      
+
       const resultRows = [];
 
       if (value.length >= 1) {
         try {
           db.exec({
-            //sql: "select * from fruits where contaner = '${value}'",//昇順でソートしてみます。
             sql: sqlString,
             rowMode: 'object',
             resultRows,
@@ -204,12 +206,17 @@ var db;
 
 
     function _rack(value) {
+      var value;
+      var sqlString = `select * from fruits where rack='${value}'`;
+
+
+
       const resultRows = [];
 
       if (value.length >= 1) {
         try {
           db.exec({
-            sql: "SELECT * FROM fruits where rack=" + value,//昇順でソートしてみます。
+            sql: sqlString,
             rowMode: "object",
             resultRows,
           });
