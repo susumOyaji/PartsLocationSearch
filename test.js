@@ -36,7 +36,6 @@
         return resultRows;
     }
 
-    //_song('Bob');
     // Logs { id, name }[]
     console.log(_song('Bob'));
 })();

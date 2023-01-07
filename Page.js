@@ -159,13 +159,14 @@ var db;
           result.innerText = value + " is Not registered";
         } else {
           for (var i = 0; i < resultRows.length; i++) {
-            result.innerText = resultRows[i].contaner;
-            result.innerText = result.innerText + " - " + resultRows[i].rack;
+            //result.innerText = resultRows[i].contaner;
+            //result.innerText = result.innerText + " - " + resultRows[i].rack;
           }
 
         }
 
       }
+      return resultRows;
 
     }
 
@@ -230,7 +231,7 @@ var db;
           for (var i = 0; i < resultRows.length; i++) {
             result.innerText = result.innerText + " ... " + resultRows[i].contaner;
           }
-         
+
 
         }
 
@@ -245,6 +246,7 @@ var db;
 
     document.querySelector('#select').addEventListener('change', function () {
       var a = document.getElementById("select").value;
+      //const out = document.getElementById("#select-output");
       var s = a.charAt(0);//
 
       switch (s) {
@@ -264,11 +266,17 @@ var db;
           break;
         default: //上該のすべてのCASEに当てはまらないときに実行する。
           console.log("Parts");
-          //document.getElementById("parts").focus();
-          //document.getElementById('parts').value = a;
-          /// clickイベントを発火させる
-          //document.getElementById('parts').click()
-          _parts(a);
+          var ret = _parts(a);
+       
+          // オブジェクトデータをJSON化
+          var json = JSON.stringify(ret);
+
+          // JSONを再びオブジェクトデータの形式に変換
+          json = JSON.parse(json);
+          console.log(json[0].contaner);
+          console.log(json[0].rack);
+
+          document.getElementById("select-output").innerText = JSON.stringify(json, undefined, 2);
           break;
       }
 
